@@ -1,99 +1,67 @@
-let pokemonList = [
-    {name: 'Bulbasaur', 
-    height: 0.7, 
-    category: 'seed',
-    types: ['grass', 'poison'],
+//Set variable for the Pokemon Repository as well as the add and get all functions
+let pokemonRepository = (function () {
+    let pokemonList = [{name: 'Bulbasaur', 
+        height: 0.7, 
+        category: 'Seed',
+        types: ['Grass', 'Poison'],
     },
     {name: 'Ivysaur', 
-    height: 2, 
-    category: 'seed',
-    types: ['grass', 'poison']
+        height: 2, 
+        category: 'Seed',
+        types: ['Grass', 'Poison']
     },
     {name: 'Venusaur', 
-    height: 2, 
-    category: 'seed',
-    types: ['grass', 'poison']
+        height: 2, 
+        category: 'Seed',
+        types: ['Grass', 'Poison']
     },
     {name: 'Charmander', 
-    height: 1, 
-    category: 'lizard',
-    types: ['fire']
+        height: 1, 
+        category: 'Lizard',
+        types: ['Fire']
     },
     {name: 'Charmeleon', 
-    height: 1.1, 
-    category: 'flame',
-    types: ['fire']
+        height: 1.1, 
+        category: 'Flame',
+        types: ['Fire']
     },
     {name: 'Charizard', 
-    height: 3, 
-    category: 'flame',
-    types: ['fire', 'flying']
+        height: 3, 
+        category: 'Flame',
+        types: ['Fire', 'Flying']
     },
     {name: 'Squirtle', 
-    height: 0.5, 
-    category: 'tiny turtle',
-    types: ['water']
+        height: 0.5, 
+        category: 'Tiny Turtle',
+        types: ['Water']
     },
     {name: 'Wartortle', 
-    height: 1, 
-    category: 'turtle',
-    types: ['water']
+        height: 1, 
+        category: 'Turtle',
+        types: ['Water']
     },
     {name: 'Blastois', 
-    height: 1.6, 
-    category: 'shellfish',
-    types: ['water']
-    }
-    ];
+        height: 1.6, 
+        category: 'Shellfish',
+        types: ['Water']
+    }];
 
-//using for()
-
-// function getPokemonGrid(list) {
-//     let element = document.getElementsByClassName("pokedex-grid-container")[0];
-
-//     for (let i = 0; i < list.length; i++) {
-//         if (list[i].height > 2) {
-//             let html = `<div class="pokedex-grid-item">
-//                             <img class="pokemonImage" src="../img/${list[i].name}.png" alt="Image of the ${list[i].name} pokemon.">
-//                             <div class="pokemon-data"> 
-//                                 Name: ${list[i].name}<br>
-//                                 Height: ${list[i].height}m
-//                             </div>
-//                             <p class="pokemon-comment">Wow thats big!</p>
-//                             <div class="pokemon-types-container">`;
-            
-//             for (let j = 0; j < list[i].types.length; j++) {
-//                 html += `<div class="pokemon-type ${list[i].types[j]}">${list[i].types[j]}</div>`; 
-//             }
-//             html += `</div></div>`;
-//             element.innerHTML += html;
-//         } else {
-//             let html = `<div class="pokedex-grid-item">
-//                             <img class="pokemonImage" src="../img/${list[i].name}.png" alt="Image of the ${list[i].name} pokemon.">
-//                             <div class="pokemon-data">
-//                                 Name: ${list[i].name}<br>
-//                                 Height: ${list[i].height}m
-//                             </div>
-//                             <p class="pokemon-comment"></p>
-//                             <div class="pokemon-types-container">`;
-    
-//             for (let j = 0; j < list[i].types.length; j++) {
-//                 html += `<div class="pokemon-type ${list[i].types[j]}">${list[i].types[j]}</div>`;
-//             }
-//             html += `</div></div>`;
-//             element.innerHTML += html;
-//         }
-//     }
-// }
-
-// getPokemonGrid(pokemonList);
-
-//using forEach()
+    return {
+        add: function (pokemon) {
+            pokemonList.push(pokemon);
+        },
+        getAll: function () {
+            return pokemonList;
+        }
+    };
+})()
 
 let element = document.getElementsByClassName("pokedex-grid-container")[0];
 
-pokemonList.forEach (function(pokemon){
-        
+//Get all pokemon and add a single card for each in the grid container
+pokemonRepository.getAll().forEach (function(pokemon){
+
+    //Build the indivdual Pokemon card
     let html = `<div class="pokedex-grid-item">
                 <img class="pokemonImage" src="../img/${pokemon.name}.png" alt="Image of the ${pokemon.name} pokemon.">
                 <div class="pokemon-data">Name: ${pokemon.name}<br>Height: ${pokemon.height}</div>
@@ -107,8 +75,4 @@ pokemonList.forEach (function(pokemon){
     html += '</div></div>';
                 
     element.innerHTML += html;
-})
-
-Object.keys(pokemonList).forEach(function(property){
-    console.log(pokemonList[property]);
 })
