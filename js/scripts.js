@@ -63,7 +63,7 @@ pokemonRepository.getAll().forEach (function(pokemon){
 
     //Build the indivdual Pokemon card
     let html = `<div class="pokedex-grid-item">
-                <img class="pokemonImage" src="../img/${pokemon.name}.png" alt="Image of the ${pokemon.name} pokemon.">
+                <img class="pokemonImage" src="../img/pokemonImages/${pokemon.name}.png" alt="Image of the ${pokemon.name} pokemon.">
                 <div class="pokemon-data">Name: ${pokemon.name}<br>Height: ${pokemon.height}</div>
                 <div class="pokemon-types-container">`;
 
