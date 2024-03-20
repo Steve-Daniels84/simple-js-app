@@ -56,12 +56,7 @@ footer {
 .pokemon-data {
     text-align: left;
     width: 100%;
-    padding: 0 15%;
-}
-
-.pokemon-comment {
-    width: 100%;
-    height: 20px;
+    padding: 0 10%;
 }
 
 .pokemon-types-container {

@@ -65,11 +65,11 @@ pokemonRepository.getAll().forEach (function(pokemon){
     let html = `<div class="pokedex-grid-item">
                 <img class="pokemonImage" src="../img/${pokemon.name}.png" alt="Image of the ${pokemon.name} pokemon.">
                 <div class="pokemon-data">Name: ${pokemon.name}<br>Height: ${pokemon.height}</div>
-                <p class="pokemon-comment"></p>
                 <div class="pokemon-types-container">`;
 
     pokemon.types.forEach (function(type){
-        html += `<div class="pokemon-type ${type}">${type}</div>`;
+
+        html += `<div class="pokemon-type ${type.toLowerCase()}">${type}</div>`;
         });
 
     html += '</div></div>';
