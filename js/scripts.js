@@ -112,7 +112,8 @@ function pokemonSearch () {
 
         } else {
             result.forEach(function(pokemon){
-                console.log(pokemon.name);
+                pokemonResult (pokemon.name, pokemon.height, pokemon.category, pokemon.types);
+                //console.log (pokemon.name, pokemon.height, pokemon.category, pokemon.types);
             });
         }
         
@@ -121,23 +122,28 @@ function pokemonSearch () {
 
 //construct and present pokemon search result
 function pokemonResult (name,height,category,types) {
-    //get main grid container
+
     let element = document.getElementsByClassName("pokedex-grid-container")[0];
     
-    //change styling of current grid to allow search result to show
-    element.classList.add('search-result');
+    //Build the indivdual Pokemon cards
+    let html = `<div class="pokedex-grid-item">
+                <img class="pokemonImage" src="../img/pokemonImages/${name}.png" alt="Image of the ${name} pokemon.">
+                <div class="pokemon-data">Name: ${name}<br>Height: ${height}<br>Category: ${category}</div>
+                <div class="pokemon-types-container">`;
 
-    //build html element
+    //Iterate through types to build tag for each type
+    types.forEach (function(type){
 
-    let searchCard = `
-        <div class="pokemon-profile-container">
-            <div class="pokemon-profile-image-container">
-                <img class="pokemon-profile-image" src="">
-            </div>
-            <div class="pokemon-profile-data">
-            </div>
-        </div>
-        `
+        html += `<div class="pokemon-type ${type.toLowerCase()}">${type}</div>`;
+        });
+
+    html += `</div></div>`;
+
+    //change styling of current grid to allow error message to show
+    element.classList.add(`pokemon-profile-result`);
+                
+    element.innerHTML = html;
+
 };
 
 //construct and present error message
