@@ -98,20 +98,57 @@ searchBox.addEventListener('input', function() {
 function pokemonSearch () {
     
     if (searchParam === '') {
-        //error message if no search paramater defined
-        let element = document.getElementsByClassName("pokedex-grid-container")[0];
-        
-        //change styling of current grid to allow error message to show
-        element.classList.add('search-error');
 
-        element.innerHTML = '<p class="search-error">You do not appear to have entered any search criteria, please add something and try again</p>';
+        searchError('Nothing entered');
 
     } else {
-        //search data for name
-        console.log(searchParam);
-        //if no data exists remove all cards and show message
+        
+        let pokemonList = pokemonRepository.getAll();
+        let result = pokemonList.filter((pokemonList) => pokemonList.name  === searchParam);
 
-        //if it does exist show the card in the middle of the screen
+        if (result.length === 0) {
+            
+            searchError('There are no results for your search');
+
+        } else {
+            result.forEach(function(pokemon){
+                console.log(pokemon.name);
+            });
+        }
+        
     }
 };
 
+//construct and present pokemon search result
+function pokemonResult (name,height,category,types) {
+    //get main grid container
+    let element = document.getElementsByClassName("pokedex-grid-container")[0];
+    
+    //change styling of current grid to allow search result to show
+    element.classList.add('search-result');
+
+    //build html element
+
+    let searchCard = `
+        <div class="pokemon-profile-container">
+            <div class="pokemon-profile-image-container">
+                <img class="pokemon-profile-image" src="">
+            </div>
+            <div class="pokemon-profile-data">
+            </div>
+        </div>
+        `
+};
+
+//construct and present error message
+function searchError (message) {
+
+    //get main grid container
+    let element = document.getElementsByClassName("pokedex-grid-container")[0];
+    
+    //change styling of current grid to allow error message to show
+    element.classList.add('search-error');
+
+    //show error message
+    element.innerHTML = `<p class="search-error">${message}</p>`;
+};
