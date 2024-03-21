@@ -49,6 +49,10 @@ footer {
     margin: 10px;
 }
 
+.profile-item {
+    width: 75vw;
+}
+
 .pokemonImage {
     width: 75%;
 }
@@ -65,7 +69,26 @@ footer {
     padding: 10px;
 }
 
+.pokemon-types-container-profile {
+    display: block;
+    width: 100%;
+    padding: 10px;
+}
+
+.main-profile {
+    display: flex;
+}
+
 .pokemon-type {
+    max-width: 80px;
+    min-width: 50px;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin: 0 auto;
+    font-size: 10px;
+}
+
+.pokemon-type-profile {
     max-width: 80px;
     min-width: 50px;
     border: 1px solid black;

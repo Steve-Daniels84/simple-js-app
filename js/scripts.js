@@ -94,7 +94,7 @@ searchBox.addEventListener('input', function() {
     searchParam = searchBox.value;
 });
 
-//search for user entered search parameter
+//search for user entered search input
 function pokemonSearch () {
     
     if (searchParam === '') {
@@ -113,10 +113,8 @@ function pokemonSearch () {
         } else {
             result.forEach(function(pokemon){
                 pokemonResult (pokemon.name, pokemon.height, pokemon.category, pokemon.types);
-                //console.log (pokemon.name, pokemon.height, pokemon.category, pokemon.types);
             });
         }
-        
     }
 };
 
@@ -125,21 +123,29 @@ function pokemonResult (name,height,category,types) {
 
     let element = document.getElementsByClassName("pokedex-grid-container")[0];
     
-    //Build the indivdual Pokemon cards
-    let html = `<div class="pokedex-grid-item">
-                <img class="pokemonImage" src="../img/pokemonImages/${name}.png" alt="Image of the ${name} pokemon.">
-                <div class="pokemon-data">Name: ${name}<br>Height: ${height}<br>Category: ${category}</div>
+    //Build the Pokemon profile card
+    let html = `<div class="pokedex-grid-item profile-item">
+                <div class="main-profile">
+                    <div>
+                        <img class="pokemon-profile-image" src="../img/pokemonImages/${name}.png" alt="Image of the ${name} pokemon.">
+                    </div>
+                    <div class="pokemon-profile-data">
+                        Name: ${name}<br>
+                        Height: ${height}<br>
+                        Category: ${category}
+                    </div>
+                </div>
                 <div class="pokemon-types-container">`;
 
     //Iterate through types to build tag for each type
     types.forEach (function(type){
 
-        html += `<div class="pokemon-type ${type.toLowerCase()}">${type}</div>`;
+        html += `<div class="pokemon-type-profile ${type.toLowerCase()}">${type}</div>`;
         });
 
     html += `</div></div>`;
 
-    //change styling of current grid to allow error message to show
+    //change styling of current grid to allow Pokemon profile to show
     element.classList.add(`pokemon-profile-result`);
                 
     element.innerHTML = html;
