@@ -94,6 +94,8 @@ searchBox.addEventListener('input', function() {
     searchParam = searchBox.value;
 });
 
+searchBox.addEventListener()
+
 //search for user entered search input
 function pokemonSearch () {
     
