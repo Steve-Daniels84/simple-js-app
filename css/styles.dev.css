@@ -31,12 +31,17 @@ footer {
     height: 10vh;
 }
 
+
+
 .pokedex-grid-container {
     display: grid;
     margin: 0 auto;    
     width: 75vw;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
+    align-content: center;
+    align-items: center;
+    padding: 0 auto;
 }
 
 .pokedex-grid-item {
@@ -45,10 +50,6 @@ footer {
     text-align: center;    
     background-color: bisque;
     margin: 10px;
-}
-
-.profile-item {
-    width: 75vw;
 }
 
 .pokemonImage {
@@ -67,27 +68,7 @@ footer {
     padding: 10px;
 }
 
-.pokemon-types-container-profile {
-    display: block;
-    width: 100%;
-    padding: 10px;
-}
-
-.main-profile {
-    display: flex;
-    background-color: aliceblue;
-}
-
 .pokemon-type {
-    max-width: 80px;
-    min-width: 50px;
-    border: 1px solid black;
-    border-radius: 3px;
-    margin: 0 auto;
-    font-size: 10px;
-}
-
-.pokemon-type-profile {
     max-width: 80px;
     min-width: 50px;
     border: 1px solid black;
@@ -129,4 +110,28 @@ footer {
     text-align: center;
     padding-top: 10%;
     height: 50vh;
+}
+
+@media screen and (min-width: 0px) and (max-width: 480px){
+    .search-container {
+        text-align: center;
+        margin: 25px;
+    }
+
+    .pokedex-grid-container {
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 5px;
+    }
+    
+    .pokedex-grid-item {
+        margin: 0 auto;
+        scale: 0.75;
+        
+    }
+
+    #search-button, #sValue {
+        scale: 0.75;
+    }
+
 }
