@@ -86,31 +86,49 @@ pokemonRepository.getAll().forEach (function(pokemon){
     element.innerHTML += html;
 });
 
-//monitor search input for a value
+
 let searchBox = document.getElementById('sValue');
 let searchParam = '';
+let searchFocus = false;
 
+//monitor search input for a value
 searchBox.addEventListener('input', function() {
     searchParam = searchBox.value;
 });
 
-searchBox.addEventListener()
+//monitor for enter key press whilst input is in focus
+searchBox.addEventListener('keydown', function(event){
+    if (searchFocus = true && event.key === 'Enter'){
+        pokemonSearch()
+    }
+})
+
+//montior focus state of input
+searchBox.addEventListener('focus', function(){
+    searchFocus = true;
+})
+
+//monitor blur state of input
+searchBox.addEventListener('blur', function () {
+    searchFocus = false;
+})
 
 //search for user entered search input
 function pokemonSearch () {
     
     if (searchParam === '') {
 
-        searchError('Nothing entered');
+        headerWarning('Nothing entered');
 
     } else {
         
         let pokemonList = pokemonRepository.getAll();
-        let result = pokemonList.filter((pokemonList) => pokemonList.name  === searchParam);
+        
+        let result = pokemonList.filter(pokemon => (pokemon.name.toLowerCase()).includes(searchParam.toLowerCase()));
 
         if (result.length === 0) {
             
-            searchError('There are no results for your search');
+            headerWarning ('Your search returned no results');
 
         } else {
             result.forEach(function(pokemon){
@@ -125,44 +143,33 @@ function pokemonResult (name,height,category,types) {
 
     let element = document.getElementsByClassName("pokedex-grid-container")[0];
     
-    //Build the Pokemon profile card
-    let html = `<div class="pokedex-grid-item profile-item">
-                <div class="main-profile">
-                    <div>
-                        <img class="pokemon-profile-image" src="../img/pokemonImages/${name}.png" alt="Image of the ${name} pokemon.">
-                    </div>
-                    <div class="pokemon-profile-data">
-                        Name: ${name}<br>
-                        Height: ${height}<br>
-                        Category: ${category}
-                    </div>
-                </div>
+    //Build the indivdual Pokemon cards
+    let html = `<div class="pokedex-grid-item">
+                <img class="pokemonImage" src="../img/pokemonImages/${name}.png" alt="Image of the ${name} pokemon.">
+                <div class="pokemon-data">Name: ${name}<br>Height: ${height}<br>Category: ${category}</div>
                 <div class="pokemon-types-container">`;
 
     //Iterate through types to build tag for each type
     types.forEach (function(type){
 
-        html += `<div class="pokemon-type-profile ${type.toLowerCase()}">${type}</div>`;
+        html += `<div class="pokemon-type ${type.toLowerCase()}">${type}</div>`;
         });
 
-    html += `</div></div>`;
-
-    //change styling of current grid to allow Pokemon profile to show
-    element.classList.add(`pokemon-profile-result`);
+    html += '</div></div>';
                 
-    element.innerHTML = html;
+    element.innerHTML += html;
 
 };
 
-//construct and present error message
-function searchError (message) {
+//construct and present header warning message
+function headerWarning (message) {
 
     //get main grid container
-    let element = document.getElementsByClassName("pokedex-grid-container")[0];
-    
-    //change styling of current grid to allow error message to show
-    element.classList.add('search-error');
+    document.getElementById('header-warning').innerHTML = message;
 
-    //show error message
-    element.innerHTML = `<p class="search-error">${message}</p>`;
+    setTimeout (function () {
+        document.getElementById('header-warning').innerHTML = "";
+    }, 5000)
 };
+
+        
