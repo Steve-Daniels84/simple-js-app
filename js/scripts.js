@@ -131,26 +131,30 @@ function pokemonSearch () {
             headerWarning ('Your search returned no results');
 
         } else {
+            
+            let element = document.getElementsByClassName("pokedex-grid-container")[0];
+            element.innerHTML = "";
+
             result.forEach(function(pokemon){
-                pokemonResult (pokemon.name, pokemon.height, pokemon.category, pokemon.types);
+                pokemonResult (pokemon);
             });
         }
     }
 };
 
 //construct and present pokemon search result
-function pokemonResult (name,height,category,types) {
+function pokemonResult (pokemon) {
 
     let element = document.getElementsByClassName("pokedex-grid-container")[0];
     
     //Build the indivdual Pokemon cards
     let html = `<div class="pokedex-grid-item">
-                <img class="pokemonImage" src="../img/pokemonImages/${name}.png" alt="Image of the ${name} pokemon.">
-                <div class="pokemon-data">Name: ${name}<br>Height: ${height}<br>Category: ${category}</div>
+                <img class="pokemonImage" src="../img/pokemonImages/${pokemon.name}.png" alt="Image of the ${pokemon.name} pokemon.">
+                <div class="pokemon-data">Name: ${pokemon.name}<br>Height: ${pokemon.height}<br>Category: ${pokemon.category}</div>
                 <div class="pokemon-types-container">`;
 
     //Iterate through types to build tag for each type
-    types.forEach (function(type){
+    pokemon.types.forEach (function(type){
 
         html += `<div class="pokemon-type ${type.toLowerCase()}">${type}</div>`;
         });
@@ -158,7 +162,6 @@ function pokemonResult (name,height,category,types) {
     html += '</div></div>';
                 
     element.innerHTML += html;
-
 };
 
 //construct and present header warning message
