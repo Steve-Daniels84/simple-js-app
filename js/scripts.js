@@ -65,6 +65,7 @@ let pokemonRepository = (function () {
 })()
 
 //Get all pokemon and add a single card for each in the grid container
+function renderPokemonRepository () {
 pokemonRepository.getAll().forEach (function(pokemon){
 
     let element = document.getElementsByClassName("pokedex-grid-container")[0];
@@ -85,11 +86,14 @@ pokemonRepository.getAll().forEach (function(pokemon){
                 
     element.innerHTML += html;
 });
+}
 
+renderPokemonRepository ()
 
 let searchBox = document.getElementById('sValue');
 let searchParam = '';
 let searchFocus = false;
+let searchReset = document.getElementById('search-reset');
 
 //monitor search input for a value
 searchBox.addEventListener('input', function() {
@@ -111,6 +115,14 @@ searchBox.addEventListener('focus', function(){
 //monitor blur state of input
 searchBox.addEventListener('blur', function () {
     searchFocus = false;
+})
+
+//reset search box and main container to start state
+searchReset.addEventListener('click', function(){
+    let element = document.getElementsByClassName("pokedex-grid-container")[0];
+    searchBox.value = "";
+    element.innerHTML = "";
+    renderPokemonRepository ()
 })
 
 //search for user entered search input
@@ -168,10 +180,10 @@ function pokemonResult (pokemon) {
 function headerWarning (message) {
 
     //get main grid container
-    document.getElementById('header-warning').innerHTML = message;
+    document.getElementById('search-warning').innerHTML = message;
 
     setTimeout (function () {
-        document.getElementById('header-warning').innerHTML = "";
+        document.getElementById('search-warning').innerHTML = "";
     }, 5000)
 };
 
