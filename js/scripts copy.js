@@ -174,4 +174,14 @@ function headerWarning (message) {
     }, 5000)
 };
 
-        
+document.querySelector('.close-menu').addEventListener ('click', function () {
+    let sidebar = document.querySelector ('.sidebar');
+    sidebar.classList.remove ('open');
+    sidebar.classList.add ('closed');
+})
+
+document.querySelector('.open-menu').addEventListener ('click', function () {
+    let sidebar = document.querySelector ('.sidebar');
+    sidebar.classList.remove ('closed');
+    sidebar.classList.add ('open');
+} )
