@@ -8,27 +8,29 @@
     <title>Simple JS App</title>
   </head>
   <body>
-    <header>
-    </header>
-    <main>
+    <div class="sidebar">
       <div class="search-container">
         <div class="search-input-error-group">
           <input class="search-input" id="sValue" type="text" placeholder="Search">
           <button type="button" id="search-button" onclick="pokemonSearch()">Go!</button>
           <span id="search-reset">Reset</span>
-          
         </div> 
         <div id="search-warning"></div>
       </div>
-      <div class="main-container">
-        <div class="pokedex-grid-container">
-        </div>
+      <ul class="pokemon-list">
+      </ul>
+    </div>
+    <div class="main-container">
+      <div class="pokedex-grid-container">
       </div>
+    </div>
+    <header>
+    </header>
+    <main>
     </main>
     <footer>
-
     </footer>
-    <script src="./js/scripts.js"></script>
+    <script src="./js/scripts copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>
