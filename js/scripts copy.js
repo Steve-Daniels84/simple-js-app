@@ -85,8 +85,15 @@ let pokemonRepository = (function () {
             card.appendChild (button);
             listItem.appendChild (card);
 
+            button.addEventListener ('click', function(){
+                pokemonRepository.showDetails (pokemon);
+            })
 
             element.appendChild (listItem);
+        },
+
+        showDetails: function (pokemon) {
+            console.log (pokemon);
         }
 
     };
