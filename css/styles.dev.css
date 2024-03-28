@@ -23,36 +23,32 @@ body {
 }
 
 header {
-    width: 98vw;
+    width: 100%;
     margin-top: 0 auto;
-    border-radius: 25px 25px 0 0;
-    z-index: 1;
 }
 
 main {
     background-size: contain;
     border-radius: 20px;
-    width: 98vw;
-    height: 98vh;
-    height: 80vh;
+    width: 100%;
+    height: 90vh;
     margin: 0 auto;
 }
 
 .main-content-container {
+    border: 1px solid white;
     text-align: center;
-    height: 95vh;
 }
 
 footer {
-    background-color: transparent;
-    border-radius: 0 0 25px 25px;
-    width: 98vw;
+    width: 100%;
+    border: 1px solid white;
 }
 
 .sidebar {
-    max-width: 25vw;
+    max-width: 300px;
     height: 100vh;
-    position: fixed;
+    position: absolute;
     background-color: lightgray;
     left: -40vw;
     transition: left 0.3s ease;
@@ -107,7 +103,6 @@ footer {
     list-style-type: none;
     width: 100%;
     height: 60px;
-
     transition: scale 0.3s ease;
     border-radius: 0 20px 0 20px;
     color: var(--dark-text-color);
@@ -123,6 +118,7 @@ footer {
     padding: 8px;
     text-align: center;
     align-items: center;
+    transition: box-shadow 0.5s ease-in-out;
 }
 
 .go-button {
@@ -136,6 +132,10 @@ footer {
 
 .pokemon-list li:hover {
     scale: 0.95;
+}
+
+.sidebar-card:hover {
+    box-shadow: 5px 5px rgba(169, 169, 169, 0.331);
 }
 
 .search-container {
@@ -157,8 +157,7 @@ footer {
 
 #search-reset {
     cursor: pointer;
-    text-align: right;
-    color: var(--dark-text-color);
+    color: black;
 }
 
 .seed {
