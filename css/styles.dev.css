@@ -46,7 +46,7 @@ footer {
 }
 
 .sidebar {
-    max-width: 300px;
+    max-width: 260px;
     height: 100vh;
     position: absolute;
     background-color: lightgray;
@@ -114,7 +114,7 @@ footer {
 
 .pokemon-list-container {
     overflow: scroll;
-    height: 50vh;
+    height: 60vh;
 }
 
 .pokemon-list li {
@@ -158,6 +158,10 @@ footer {
 
 .search-container {
     justify-content: left;
+}
+
+.search-input {
+    width: 150px;
 }
 
 .search-input-error-group {
