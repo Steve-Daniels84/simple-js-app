@@ -65,13 +65,26 @@ let pokemonRepository = (function () {
         addListItem: function (pokemon) {
 
             let element = document.querySelector(".pokemon-list"); //get pokemon list
+            
             let listItem = document.createElement('li'); //create list item
-            let category = pokemon.category.toLowerCase(); // make category lowercase so can be reconigsed as class
+            let category = pokemon.category.toLowerCase(); // make category lowercase so can be recognised as class
             
             let card = document.createElement('div'); //set card variable
-            card.innerText = `${pokemon.name}`; //add pokemon name to card
-            card.classList.add ('sidebar-card') // add class
-            listItem.appendChild (card); 
+            let button = document.createElement ('button'); //set button variable
+            let cardTitle = document.createElement ('p'); //set card title element
+
+            card.classList.add ('sidebar-card'); //add class to card
+
+            cardTitle.classList.add ('card-title');
+            cardTitle.innerText = `${pokemon.name}`; //add pokemon name to card
+            
+            button.innerText = `GO!`; //add text to button
+            button.classList.add ('go-button'); //add class to button
+
+            card.appendChild (cardTitle);
+            card.appendChild (button);
+            listItem.appendChild (card);
+
 
             element.appendChild (listItem);
         }
