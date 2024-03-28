@@ -71,7 +71,6 @@ let pokemonRepository = (function () {
             let card = document.createElement('div'); //set card variable
             card.innerText = `${pokemon.name}`; //add pokemon name to card
             card.classList.add ('sidebar-card') // add class
-            card.classList.add (category); // add class   
             listItem.appendChild (card); 
 
             element.appendChild (listItem);
@@ -163,25 +162,31 @@ function pokemonSearch () {
 };
 
 
-//construct and present header warning message
+//construct and present search error message
 function headerWarning (message) {
 
     //get main grid container
-    document.getElementById('search-warning').innerHTML = message;
+    document.getElementById('search-error').innerHTML = message;
 
     setTimeout (function () {
-        document.getElementById('search-warning').innerHTML = "";
+        document.getElementById('search-error').innerHTML = "";
     }, 5000)
 };
 
 document.querySelector('.close-menu').addEventListener ('click', function () {
     let sidebar = document.querySelector ('.sidebar');
+    let openButton = document.querySelector ('.open-menu');
+
     sidebar.classList.remove ('open');
     sidebar.classList.add ('closed');
+    openButton.style.visibility = 'visible';
 })
 
 document.querySelector('.open-menu').addEventListener ('click', function () {
     let sidebar = document.querySelector ('.sidebar');
+    let openButton = document.querySelector ('.open-menu');
+
     sidebar.classList.remove ('closed');
     sidebar.classList.add ('open');
+    openButton.style.visibility = 'hidden';
 } )
