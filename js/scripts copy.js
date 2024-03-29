@@ -193,20 +193,3 @@ function headerWarning (message) {
     }, 5000)
 };
 
-document.querySelector('.close-menu').addEventListener ('click', function () {
-    let sidebar = document.querySelector ('.sidebar');
-    let openButton = document.querySelector ('.open-menu');
-
-    sidebar.classList.remove ('open');
-    sidebar.classList.add ('closed');
-    openButton.style.visibility = 'visible';
-})
-
-document.querySelector('.open-menu').addEventListener ('click', function () {
-    let sidebar = document.querySelector ('.sidebar');
-    let openButton = document.querySelector ('.open-menu');
-
-    sidebar.classList.remove ('closed');
-    sidebar.classList.add ('open');
-    openButton.style.visibility = 'hidden';
-} )

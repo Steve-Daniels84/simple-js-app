@@ -50,7 +50,6 @@ footer {
     height: 100vh;
     position: absolute;
     background-color: lightgray;
-    left: -40vw;
     transition: left 0.3s ease;
     overflow: hidden;
 }
@@ -64,13 +63,11 @@ footer {
 
 .sidebar-header-image {
     position: relative;
-    top: -50px;
     width: 35%;
 }
 
 .sidebar-title {
     position: relative;
-    top: -50px;
 }
 
 .close-menu {
