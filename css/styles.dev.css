@@ -22,11 +22,6 @@ body {
     overflow: hidden;
 }
 
-header {
-    width: 100%;
-    margin-top: 0 auto;
-}
-
 main {
     background-size: contain;
     border-radius: 20px;
@@ -39,17 +34,11 @@ main {
     height: 80vh;
 }
 
-footer {
-    width: 100%;
-    height: 10vh;
-    text-align: center;
-}
-
 .sidebar {
     max-width: 260px;
     height: 100vh;
     position: absolute;
-    background-color: lightgray;
+    background-color: rgb(240, 240, 240);
     transition: left 0.3s ease;
     overflow: hidden;
 }
@@ -68,33 +57,11 @@ footer {
 
 .sidebar-title {
     position: relative;
-}
-
-.close-menu {
-    margin-top: 25px;
-    margin-right: 25px;
-    cursor: pointer;
-}
-
-.close-menu:focus, .close-menu:hover, .open-menu:focus, .open-menu:hover {
-    scale: 1.1;
-}
-
-.open-menu {
-    cursor: pointer;
-    margin: 25px;
-}
-
-.sidebar.closed {
-    left: -40vw;
-}
-
-.sidebar.open {
-    left: 0;
+    color: whitesmoke;
 }
 
 .sidebar-header-container {
-    background-color: #f2320c;
+    background: linear-gradient(to bottom left, #f13434, #b80101);
     background-clip: padding-box;
     text-align: right;
     background-repeat: no-repeat;
@@ -121,6 +88,7 @@ footer {
     transition: scale 0.3s ease;
     border-radius: 0 20px 0 20px;
     color: var(--dark-text-color);
+    margin-bottom: 20px;
 }
 
 .sidebar-card {
@@ -129,11 +97,16 @@ footer {
     background-color: white;
     color: #210c3d;
     width: 100%;
-    height: 10vh;
+    height: 70px;
     padding: 8px;
     text-align: center;
     align-items: center;
     transition: box-shadow 0.5s ease-in-out;
+    margin-bottom: 10px;
+}
+
+.card-image {
+    border-radius: 50px;
 }
 
 .go-button {
@@ -177,18 +150,6 @@ footer {
 #search-reset {
     cursor: pointer;
     color: black;
-}
-
-.seed {
-    background-color:var(--seed) ;
-}
-
-.flame {
-    background-color: var(--fire);
-}
-
-.turtle, .shellfish{
-    background-color: var(--water);
 }
 
 @media screen and (min-width: 0px) and (max-width: 700px){

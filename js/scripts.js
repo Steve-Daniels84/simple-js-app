@@ -1,4 +1,3 @@
-//Set variable for the Pokemon Repository as well as the add and get all functions
 let pokemonRepository = (function () {
     let pokemonList = [{name: 'Bulbasaur', 
         height: 0.7, 
@@ -17,7 +16,7 @@ let pokemonRepository = (function () {
     },
     {name: 'Charmander', 
         height: 1, 
-        category: 'Lizard',
+        category: 'Flame',
         types: ['Fire']
     },
     {name: 'Charmeleon', 
@@ -32,7 +31,7 @@ let pokemonRepository = (function () {
     },
     {name: 'Squirtle', 
         height: 0.5, 
-        category: 'Tiny Turtle',
+        category: 'Turtle',
         types: ['Water']
     },
     {name: 'Wartortle', 
@@ -60,31 +59,32 @@ let pokemonRepository = (function () {
         },
         getAll: function () {
             return pokemonList;
+        },
+
+        addListItem: function (pokemon) {
+
+            let element = document.querySelector(".pokemon-list");
+            let card = cardBuilder (pokemon);
+            let listItem = document.createElement('li');
+            
+            listItem.appendChild (card);
+
+            element.appendChild (listItem);
+        },
+
+        showDetails: function (pokemon) {
+            console.log (pokemon);
         }
+
     };
 })()
 
-//Get all pokemon and add a single card for each in the grid container
 function renderPokemonRepository () {
-pokemonRepository.getAll().forEach (function(pokemon){
+    
+    pokemonRepository.getAll().forEach (function(pokemon){
+    
+        pokemonRepository.addListItem(pokemon);
 
-    let element = document.getElementsByClassName("pokedex-grid-container")[0];
-
-    //Build the indivdual Pokemon cards
-    let html = `<div class="pokedex-grid-item">
-                <img class="pokemonImage" src="../img/pokemonImages/${pokemon.name}.png" alt="Image of the ${pokemon.name} pokemon.">
-                <div class="pokemon-data">Name: ${pokemon.name}<br>Height: ${pokemon.height}<br>Category: ${pokemon.category}</div>
-                <div class="pokemon-types-container">`;
-
-    //Iterate through types to build tag for each type
-    pokemon.types.forEach (function(type){
-
-        html += `<div class="pokemon-type ${type.toLowerCase()}">${type}</div>`;
-        });
-
-    html += '</div></div>';
-                
-    element.innerHTML += html;
 });
 }
 
@@ -107,7 +107,7 @@ searchBox.addEventListener('keydown', function(event){
     }
 })
 
-//montior focus state of input
+//monitor focus state of input
 searchBox.addEventListener('focus', function(){
     searchFocus = true;
 })
@@ -119,9 +119,12 @@ searchBox.addEventListener('blur', function () {
 
 //reset search box and main container to start state
 searchReset.addEventListener('click', function(){
-    let element = document.getElementsByClassName("pokedex-grid-container")[0];
-    searchBox.value = "";
-    element.innerHTML = "";
+    
+    //let element = document.querySelector('pokemon-list');
+    let children = document.querySelectorAll ('li');
+    children.forEach (function (child) {
+        child.remove();
+    })
     renderPokemonRepository ()
 })
 
@@ -144,47 +147,68 @@ function pokemonSearch () {
 
         } else {
             
-            let element = document.getElementsByClassName("pokedex-grid-container")[0];
-            element.innerHTML = "";
+            let element = document.querySelector('pokemon-list');
+            let children = document.querySelectorAll ('li');
+            children.forEach (function (child) {
+                child.remove();
+            })
+            
 
             result.forEach(function(pokemon){
-                pokemonResult (pokemon);
+                pokemonRepository.addListItem (pokemon);
             });
         }
     }
 };
 
-//construct and present pokemon search result
-function pokemonResult (pokemon) {
 
-    let element = document.getElementsByClassName("pokedex-grid-container")[0];
-    
-    //Build the indivdual Pokemon cards
-    let html = `<div class="pokedex-grid-item">
-                <img class="pokemonImage" src="../img/pokemonImages/${pokemon.name}.png" alt="Image of the ${pokemon.name} pokemon.">
-                <div class="pokemon-data">Name: ${pokemon.name}<br>Height: ${pokemon.height}<br>Category: ${pokemon.category}</div>
-                <div class="pokemon-types-container">`;
-
-    //Iterate through types to build tag for each type
-    pokemon.types.forEach (function(type){
-
-        html += `<div class="pokemon-type ${type.toLowerCase()}">${type}</div>`;
-        });
-
-    html += '</div></div>';
-                
-    element.innerHTML += html;
-};
-
-//construct and present header warning message
+//construct and present search error message
 function headerWarning (message) {
 
     //get main grid container
-    document.getElementById('search-warning').innerHTML = message;
+    document.getElementById('search-error').innerHTML = message;
 
     setTimeout (function () {
-        document.getElementById('search-warning').innerHTML = "";
+        document.getElementById('search-error').innerHTML = "";
     }, 5000)
 };
 
-        
+function cardBuilder (pokemon) {
+    let card = document.createElement('div'); //set card variable
+    
+    card.classList.add ('sidebar-card');
+
+    //Create card child elements
+    let button = document.createElement ('button');
+    let cardTitle = document.createElement ('p');
+    let pokemonImageContainer = document.createElement ('div');
+    let pokemonImage = document.createElement ('img');
+
+    pokemonImage.src = 'https://placehold.co/40x40';
+    pokemonImage.classList.add ('card-image')
+
+    //Add card image container and image
+    pokemonImageContainer.classList.add ('card-image-container');
+    pokemonImageContainer.appendChild (pokemonImage);
+
+    //Add card title content and class
+    cardTitle.classList.add ('card-title');
+    cardTitle.innerText = `${pokemon.name}`;
+    
+    //Add card button content and class
+    button.innerText = `GO!`;
+    button.classList.add ('go-button');
+
+    //Add everything to the card
+    
+    card.appendChild (pokemonImageContainer);
+    card.appendChild (cardTitle);
+    card.appendChild (button);
+
+    //Event handler for card button
+    button.addEventListener ('click', function(){
+        pokemonRepository.showDetails (pokemon);
+    })
+
+    return card
+}
