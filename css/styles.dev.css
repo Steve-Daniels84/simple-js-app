@@ -17,21 +17,8 @@
   }
 
 body {
-    background-image: url("../img/background.png");
+    display: flex;
     font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
-}
-
-main {
-    background-size: contain;
-    border-radius: 20px;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.main-content-container {
-    text-align: center;
-    height: 80vh;
 }
 
 .sidebar {
@@ -41,6 +28,14 @@ main {
     background-color: rgb(240, 240, 240);
     transition: left 0.3s ease;
     overflow: hidden;
+}
+
+main {
+    margin-left: 260px;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../img/background.png');
+    background-size: cover;
 }
 
 .sidebar-header-image-container {
@@ -142,7 +137,7 @@ main {
 #search-error {
     position: absolute;
     left: 10px;
-    top: 250px;
+    top: 200px;
     font-size: 10px;
     color: red;
 }
