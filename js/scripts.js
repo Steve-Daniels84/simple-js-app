@@ -212,3 +212,13 @@ function cardBuilder (pokemon) {
 
     return card
 }
+
+fetch('https://pokeapi.co/api/v2/pokemon/?limit=20&offset=20').then (
+    function(response) {
+        return response.json();
+    }).then (function (pokemonList){
+        
+    })
+    .catch (function (){
+    });
+    
