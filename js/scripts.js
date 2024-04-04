@@ -212,13 +212,14 @@ function cardBuilder (pokemon) {
 
     return card
 }
-    
-let pokeApi = new Promise (function (resolve, reject ){
-    let data = fetch('https://pokeapi.co/api/v2/pokemon/?limit=20&offset=20');
-    if (data != null) {
-        resolve (console.log('Data'));
-    }
-    else {
-       reject (console.log('No data recieved'));
-    }
-})
+
+    fetch('https://pokeapi.co/api/v2/pokemon/?limit=20&offset=20').then(function (response){
+    return response.json();
+    }).then (function(pokemonList){
+        pokemonList.results.forEach (function (pokemon){
+            console.log(pokemon.name)
+        })
+    }).catch('error')
+
+
+console.log('test async');
