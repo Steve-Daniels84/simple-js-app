@@ -1,225 +1,175 @@
 let pokemonRepository = (function () {
-    let pokemonList = [{name: 'Bulbasaur', 
-        height: 0.7, 
-        category: 'Seed',
-        types: ['Grass', 'Poison'],
-    },
-    {name: 'Ivysaur', 
-        height: 2, 
-        category: 'Seed',
-        types: ['Grass', 'Poison']
-    },
-    {name: 'Venusaur', 
-        height: 2, 
-        category: 'Seed',
-        types: ['Grass', 'Poison']
-    },
-    {name: 'Charmander', 
-        height: 1, 
-        category: 'Flame',
-        types: ['Fire']
-    },
-    {name: 'Charmeleon', 
-        height: 1.1, 
-        category: 'Flame',
-        types: ['Fire']
-    },
-    {name: 'Charizard', 
-        height: 3, 
-        category: 'Flame',
-        types: ['Fire', 'Flying']
-    },
-    {name: 'Squirtle', 
-        height: 0.5, 
-        category: 'Turtle',
-        types: ['Water']
-    },
-    {name: 'Wartortle', 
-        height: 1, 
-        category: 'Turtle',
-        types: ['Water']
-    },
-    {name: 'Blastois', 
-        height: 1.6, 
-        category: 'Shellfish',
-        types: ['Water']
-    }];
+  let pokemonList = [];
+  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
 
-    return {
-        add: function (pokemon) {
+  function add(item) {
+    pokemonList.push(item);
+  }
 
-            let inputType = typeof (pokemon);
+  function getAll() {
+    return pokemonList;
+  }
 
-            if (inputType === "object" ) {
-                pokemonList.push(pokemon);
-            } else {
-                return console.log("You must enter correct pokemon data in object form!");
-            }
-            
-        },
-        getAll: function () {
-            return pokemonList;
-        },
+  function loadList() {
+    return fetch(apiUrl)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (json) {
+        json.results.forEach(function (item) {
+          let pokemon = {
+            name: item.name,
+            detailsUrl: item.url,
+          };
+          add(pokemon);
+          addListItem(pokemon);
+        });
+      })
+      .catch(function (e) {
+        console.error(e);
+      });
+  }
 
-        addListItem: function (pokemon) {
+  function addListItem(pokemon) {
+    let element = document.querySelector(".pokemon-list");
+    let card = cardBuilder(pokemon);
+    let listItem = document.createElement("li");
 
-            let element = document.querySelector(".pokemon-list");
-            let card = cardBuilder (pokemon);
-            let listItem = document.createElement('li');
-            
-            listItem.appendChild (card);
+    listItem.appendChild(card);
 
-            element.appendChild (listItem);
-        },
+    element.appendChild(listItem);
+  }
 
-        showDetails: function (pokemon) {
-            console.log (pokemon);
-        }
+  function showDetails(pokemon) {
+    console.log(pokemon);
+  }
 
-    };
-})()
+  return {
+    add: add,
 
-function renderPokemonRepository () {
-    
-    pokemonRepository.getAll().forEach (function(pokemon){
-    
-        pokemonRepository.addListItem(pokemon);
+    getAll: getAll,
 
+    addListItem: addListItem,
+
+    loadList: loadList,
+
+    showDetails: showDetails,
+  };
+})();
+
+pokemonRepository.loadList().then(function () {
+  pokemonRepository.getAll().forEach(function (pokemon) {});
 });
-}
 
-renderPokemonRepository ()
-
-let searchBox = document.getElementById('sValue');
-let searchParam = '';
+let searchBox = document.getElementById("sValue");
+let searchParam = "";
 let searchFocus = false;
-let searchReset = document.getElementById('search-reset');
+let searchReset = document.getElementById("search-reset");
 
 //monitor search input for a value
-searchBox.addEventListener('input', function() {
-    searchParam = searchBox.value;
+searchBox.addEventListener("input", function () {
+  searchParam = searchBox.value;
 });
 
 //monitor for enter key press whilst input is in focus
-searchBox.addEventListener('keydown', function(event){
-    if (searchFocus = true && event.key === 'Enter'){
-        pokemonSearch()
-    }
-})
+searchBox.addEventListener("keydown", function (event) {
+  if ((searchFocus = true && event.key === "Enter")) {
+    pokemonSearch();
+  }
+});
 
 //monitor focus state of input
-searchBox.addEventListener('focus', function(){
-    searchFocus = true;
-})
+searchBox.addEventListener("focus", function () {
+  searchFocus = true;
+});
 
 //monitor blur state of input
-searchBox.addEventListener('blur', function () {
-    searchFocus = false;
-})
+searchBox.addEventListener("blur", function () {
+  searchFocus = false;
+});
 
 //reset search box and main container to start state
-searchReset.addEventListener('click', function(){
-    
-    //let element = document.querySelector('pokemon-list');
-    let children = document.querySelectorAll ('li');
-    children.forEach (function (child) {
-        child.remove();
-    })
-    renderPokemonRepository ()
-})
+searchReset.addEventListener("click", function () {
+  //let element = document.querySelector('pokemon-list');
+  let children = document.querySelectorAll("li");
+  children.forEach(function (child) {
+    child.remove();
+  });
+  pokemonRepository.loadList();
+});
 
 //search for user entered search input
-function pokemonSearch () {
-    
-    if (searchParam === '') {
+function pokemonSearch() {
+  if (searchParam === "") {
+    headerWarning("Nothing entered");
+  } else {
+    let pokemonList = pokemonRepository.getAll();
 
-        headerWarning('Nothing entered');
+    let result = pokemonList.filter((pokemon) =>
+      pokemon.name.toLowerCase().includes(searchParam.toLowerCase())
+    );
 
+    if (result.length === 0) {
+      headerWarning("Your search returned no results");
     } else {
-        
-        let pokemonList = pokemonRepository.getAll();
-        
-        let result = pokemonList.filter(pokemon => (pokemon.name.toLowerCase()).includes(searchParam.toLowerCase()));
+      let element = document.querySelector("pokemon-list");
+      let children = document.querySelectorAll("li");
+      children.forEach(function (child) {
+        child.remove();
+      });
 
-        if (result.length === 0) {
-            
-            headerWarning ('Your search returned no results');
-
-        } else {
-            
-            let element = document.querySelector('pokemon-list');
-            let children = document.querySelectorAll ('li');
-            children.forEach (function (child) {
-                child.remove();
-            })
-            
-
-            result.forEach(function(pokemon){
-                pokemonRepository.addListItem (pokemon);
-            });
-        }
+      result.forEach(function (pokemon) {
+        pokemonRepository.addListItem(pokemon);
+      });
     }
-};
-
-
-//construct and present search error message
-function headerWarning (message) {
-
-    //get main grid container
-    document.getElementById('search-error').innerHTML = message;
-
-    setTimeout (function () {
-        document.getElementById('search-error').innerHTML = "";
-    }, 5000)
-};
-
-function cardBuilder (pokemon) {
-    let card = document.createElement('div'); //set card variable
-    
-    card.classList.add ('sidebar-card');
-
-    //Create card child elements
-    let button = document.createElement ('button');
-    let cardTitle = document.createElement ('p');
-    let pokemonImageContainer = document.createElement ('div');
-    let pokemonImage = document.createElement ('img');
-
-    pokemonImage.src = 'https://placehold.co/40x40';
-    pokemonImage.classList.add ('card-image')
-
-    //Add card image container and image
-    pokemonImageContainer.classList.add ('card-image-container');
-    pokemonImageContainer.appendChild (pokemonImage);
-
-    //Add card title content and class
-    cardTitle.classList.add ('card-title');
-    cardTitle.innerText = `${pokemon.name}`;
-    
-    //Add card button content and class
-    button.innerText = `GO!`;
-    button.classList.add ('go-button');
-
-    //Add everything to the card
-    
-    card.appendChild (pokemonImageContainer);
-    card.appendChild (cardTitle);
-    card.appendChild (button);
-
-    //Event handler for card button
-    button.addEventListener ('click', function(){
-        pokemonRepository.showDetails (pokemon);
-    })
-
-    return card
+  }
 }
 
-    fetch('https://pokeapi.co/api/v2/pokemon/?limit=20&offset=20').then(function (response){
-    return response.json();
-    }).then (function(pokemonList){
-        pokemonList.results.forEach (function (pokemon){
-            console.log(pokemon.name)
-        })
-    }).catch('error')
+//construct and present search error message
+function headerWarning(message) {
+  //get main grid container
+  document.getElementById("search-error").innerHTML = message;
 
+  setTimeout(function () {
+    document.getElementById("search-error").innerHTML = "";
+  }, 5000);
+}
 
-console.log('test async');
+function cardBuilder(pokemon) {
+  let card = document.createElement("div"); //set card variable
+
+  card.classList.add("sidebar-card");
+
+  //Create card child elements
+  let button = document.createElement("button");
+  let cardTitle = document.createElement("p");
+  let pokemonImageContainer = document.createElement("div");
+  let pokemonImage = document.createElement("img");
+
+  pokemonImage.src = "https://placehold.co/40x40";
+  pokemonImage.classList.add("card-image");
+
+  //Add card image container and image
+  pokemonImageContainer.classList.add("card-image-container");
+  pokemonImageContainer.appendChild(pokemonImage);
+
+  //Add card title content and class
+  cardTitle.classList.add("card-title");
+  cardTitle.innerText = `${pokemon.name}`;
+
+  //Add card button content and class
+  button.innerText = `GO!`;
+  button.classList.add("go-button");
+
+  //Add everything to the card
+  card.appendChild(pokemonImageContainer);
+  card.appendChild(cardTitle);
+  card.appendChild(button);
+
+  //Event handler for card button
+  button.addEventListener("click", function () {
+    pokemonRepository.showDetails(pokemon);
+  });
+
+  return card;
+}
