@@ -102,6 +102,7 @@ main {
 
 .card-image {
     border-radius: 50px;
+    scale: 0.5;
 }
 
 .go-button {
