@@ -2,6 +2,10 @@ let pokemonRepository = (function () {
   let pokemonList = [];
   let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
 
+  function clearList () {
+    pokemonList = [];
+  }
+
   function add(item) {
     let pokemon = {
       name: item.name,
@@ -35,6 +39,7 @@ let pokemonRepository = (function () {
       });
   }
 
+  //Get and individual pokemons details
   function loadDetails(item) {
     let url = item.detailsUrl;
     return fetch(url)
@@ -42,7 +47,6 @@ let pokemonRepository = (function () {
         return response.json();
       })
       .then(function (details) {
-        // Now we add the details to the item
         item.imageUrl = details.sprites.front_default;
         item.height = details.height;
         item.types = details.types;
@@ -53,6 +57,7 @@ let pokemonRepository = (function () {
       });
   }
 
+  //Create cards in the sidebar for each pokemon
   function addListItem(pokemon) {
     let element = document.querySelector(".pokemon-list");
     let card = cardBuilder(pokemon);
@@ -64,6 +69,9 @@ let pokemonRepository = (function () {
   }
 
   return {
+
+    clearList: clearList,
+
     add: add,
 
     getAll: getAll,
@@ -109,6 +117,8 @@ searchBox.addEventListener("blur", function () {
 
 //reset search box and main container to start state
 searchReset.addEventListener("click", function () {
+  //Reset pokemon list
+  pokemonRepository.clearList();
   //let element = document.querySelector('pokemon-list');
   let children = document.querySelectorAll("li");
   children.forEach(function (child) {
