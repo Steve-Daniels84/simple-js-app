@@ -3,7 +3,11 @@ let pokemonRepository = (function () {
   let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
 
   function add(item) {
-    pokemonList.push(item);
+    let pokemon = {
+      name: item.name,
+      detailUrl: item.detailUrl,
+    };
+    pokemonList.push(pokemon);
   }
 
   function getAll() {
@@ -31,20 +35,22 @@ let pokemonRepository = (function () {
       });
   }
 
- 
   function loadDetails(item) {
     let url = item.detailsUrl;
-    return fetch(url).then(function (response) {
-      return response.json();
-    }).then(function (details) {
-      // Now we add the details to the item
-      item.imageUrl = details.sprites.front_default;
-      item.height = details.height;
-      item.types = details.types;
-      return item
-    }).catch(function (e) {
-      console.error(e);
-    });
+    return fetch(url)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (details) {
+        // Now we add the details to the item
+        item.imageUrl = details.sprites.front_default;
+        item.height = details.height;
+        item.types = details.types;
+        return item;
+      })
+      .catch(function (e) {
+        console.error(e);
+      });
   }
 
   function addListItem(pokemon) {
@@ -67,7 +73,6 @@ let pokemonRepository = (function () {
     loadList: loadList,
 
     loadDetails: loadDetails,
-
   };
 })();
 
@@ -150,10 +155,9 @@ function headerWarning(message) {
 }
 
 function cardBuilder(pokemon) {
-  let detail = pokemonRepository.loadDetails(pokemon)
-    .then(function (item){
-      pokemonImage.src = item.imageUrl;
-    });
+  let detail = pokemonRepository.loadDetails(pokemon).then(function (item) {
+    pokemonImage.src = item.imageUrl;
+  });
 
   let card = document.createElement("div"); //set card variable
 
@@ -165,7 +169,7 @@ function cardBuilder(pokemon) {
   let pokemonImageContainer = document.createElement("div");
   let pokemonImage = document.createElement("img");
 
-  pokemonImage.src = '';
+  pokemonImage.src = "";
   pokemonImage.classList.add("card-image");
 
   //Add card image container and image
@@ -180,7 +184,6 @@ function cardBuilder(pokemon) {
   button.innerText = `GO!`;
   button.classList.add("go-button");
 
-
   //Add everything to the card
   card.appendChild(pokemonImageContainer);
   card.appendChild(cardTitle);
@@ -188,9 +191,9 @@ function cardBuilder(pokemon) {
 
   //Event handler for card button
   button.addEventListener("click", function () {
-    pokemonRepository.loadDetails(pokemon).then(function (item){
+    pokemonRepository.loadDetails(pokemon).then(function (item) {
       console.log(item);
-    })
+    });
   });
 
   return card;
