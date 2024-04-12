@@ -9,7 +9,7 @@ let pokemonRepository = (function () {
   function add(item) {
     let pokemon = {
       name: item.name,
-      detailUrl: item.detailUrl,
+      detailUrl: item.detailsUrl
     };
     pokemonList.push(pokemon);
   }
@@ -27,11 +27,15 @@ let pokemonRepository = (function () {
         json.results.forEach(function (item) {
           let pokemon = {
             name: item.name,
-            detailsUrl: item.url,
+            detailsUrl: item.url
           };
+
+          loadDetails(pokemon).then(function (item) {
+            return item.imageUrl;
+          });
+          pokemon.image = item.imageUrl;
           add(pokemon);
-          loadDetails(pokemon);
-          addListItem(pokemon, item);
+          addListItem(pokemon);
         });
       })
       .catch(function (e) {
@@ -60,6 +64,7 @@ let pokemonRepository = (function () {
   //Create cards in the sidebar for each pokemon
   function addListItem(pokemon) {
     let element = document.querySelector(".pokemon-list");
+    console.log(pokemon);
     let card = cardBuilder(pokemon);
     let listItem = document.createElement("li");
 
@@ -117,8 +122,9 @@ searchBox.addEventListener("blur", function () {
 
 //reset search box and main container to start state
 searchReset.addEventListener("click", function () {
-  //Reset pokemon list
+  //Reset pokemon list and input
   pokemonRepository.clearList();
+  searchBox.value = '';
   //let element = document.querySelector('pokemon-list');
   let children = document.querySelectorAll("li");
   children.forEach(function (child) {
@@ -147,8 +153,9 @@ function pokemonSearch() {
         child.remove();
       });
 
-      result.forEach(function (pokemon) {
-        pokemonRepository.addListItem(pokemon);
+      result.forEach(function (result) {
+        console.log(result);
+        pokemonRepository.addListItem(result);
       });
     }
   }
@@ -165,11 +172,8 @@ function headerWarning(message) {
 }
 
 function cardBuilder(pokemon) {
-  let detail = pokemonRepository.loadDetails(pokemon).then(function (item) {
-    pokemonImage.src = item.imageUrl;
-  });
 
-  let card = document.createElement("div"); //set card variable
+  const card = document.createElement("div"); //set card variable
 
   card.classList.add("sidebar-card");
 
@@ -179,7 +183,6 @@ function cardBuilder(pokemon) {
   let pokemonImageContainer = document.createElement("div");
   let pokemonImage = document.createElement("img");
 
-  pokemonImage.src = "";
   pokemonImage.classList.add("card-image");
 
   //Add card image container and image
@@ -193,6 +196,13 @@ function cardBuilder(pokemon) {
   //Add card button content and class
   button.innerText = `GO!`;
   button.classList.add("go-button");
+  let pokeDetails = {}
+  
+  pokemonRepository.loadDetails(pokemon).then(function(item){
+  pokemonImage.src = item.imageUrl;
+  });
+
+ console.log(pokeDetails);
 
   //Add everything to the card
   card.appendChild(pokemonImageContainer);
