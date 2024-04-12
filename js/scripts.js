@@ -2,6 +2,18 @@ let pokemonRepository = (function () {
   let pokemonList = [];
   let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
 
+  // function getPokePic (pokemon) {
+  //   const apiUrl = pokemon.detailUrl;
+  //   fetch (apiUrl)
+  //   .then (function (response) {
+  //    return response.json();
+  //   })
+  //   .then (function (json){
+  //     let imageUrl = json.result.imageUrl
+  //     console.log (imageUrl);
+  //   })
+  // }
+
   function clearList () {
     pokemonList = [];
   }
@@ -64,7 +76,6 @@ let pokemonRepository = (function () {
   //Create cards in the sidebar for each pokemon
   function addListItem(pokemon) {
     let element = document.querySelector(".pokemon-list");
-    console.log(pokemon);
     let card = cardBuilder(pokemon);
     let listItem = document.createElement("li");
 
@@ -74,6 +85,8 @@ let pokemonRepository = (function () {
   }
 
   return {
+
+    // getPokePic: getPokePic,
 
     clearList: clearList,
 
@@ -196,13 +209,10 @@ function cardBuilder(pokemon) {
   //Add card button content and class
   button.innerText = `GO!`;
   button.classList.add("go-button");
-  let pokeDetails = {}
   
   pokemonRepository.loadDetails(pokemon).then(function(item){
   pokemonImage.src = item.imageUrl;
   });
-
- console.log(pokeDetails);
 
   //Add everything to the card
   card.appendChild(pokemonImageContainer);
@@ -212,7 +222,6 @@ function cardBuilder(pokemon) {
   //Event handler for card button
   button.addEventListener("click", function () {
     pokemonRepository.loadDetails(pokemon).then(function (item) {
-      console.log(item);
     });
   });
 
