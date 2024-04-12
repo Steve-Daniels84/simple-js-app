@@ -2,17 +2,16 @@ let pokemonRepository = (function () {
   let pokemonList = [];
   let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
 
-  // function getPokePic (pokemon) {
-  //   const apiUrl = pokemon.detailUrl;
-  //   fetch (apiUrl)
-  //   .then (function (response) {
-  //    return response.json();
-  //   })
-  //   .then (function (json){
-  //     let imageUrl = json.result.imageUrl
-  //     console.log (imageUrl);
-  //   })
-  // }
+  function getPokePic (pokemon) {
+    const apiUrl = pokemon.detailUrl;
+    fetch (apiUrl)
+    .then (function (response) {
+     return response.json();
+    })
+    .then (function (json){
+      let imageUrl = json.sprites.front_default
+    })
+  }
 
   function clearList () {
     pokemonList = [];
@@ -42,10 +41,7 @@ let pokemonRepository = (function () {
             detailsUrl: item.url
           };
 
-          loadDetails(pokemon).then(function (item) {
-            return item.imageUrl;
-          });
-          pokemon.image = item.imageUrl;
+          loadDetails(pokemon);
           add(pokemon);
           addListItem(pokemon);
         });
@@ -86,7 +82,7 @@ let pokemonRepository = (function () {
 
   return {
 
-    // getPokePic: getPokePic,
+    getPokePic: getPokePic,
 
     clearList: clearList,
 
@@ -160,7 +156,6 @@ function pokemonSearch() {
     if (result.length === 0) {
       headerWarning("Your search returned no results");
     } else {
-      let element = document.querySelector("pokemon-list");
       let children = document.querySelectorAll("li");
       children.forEach(function (child) {
         child.remove();
@@ -222,6 +217,7 @@ function cardBuilder(pokemon) {
   //Event handler for card button
   button.addEventListener("click", function () {
     pokemonRepository.loadDetails(pokemon).then(function (item) {
+      console.log(item);
     });
   });
 
