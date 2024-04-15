@@ -202,8 +202,8 @@ function cardBuilder(pokemon) {
   card.appendChild(button);
 
   //Event handler for card button
-  button.addEventListener ("click",function () { pokemonRepository.loadDetails(pokemon).then(function () {
-      console.log(pokemon);}
+  button.addEventListener ("click",function () {pokemonRepository.loadDetails(pokemon).then(function () {
+      console.log(`Name: ${pokemon.name} <br> Height: ${pokemon.height} <br> Types: ${pokemon.types}`);}
   )});
 
   return card;
