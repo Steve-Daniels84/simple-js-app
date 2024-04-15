@@ -2,17 +2,6 @@ let pokemonRepository = (function () {
   let pokemonList = [];
   let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
 
-  function getPokePic (pokemon) {
-    const apiUrl = pokemon.detailUrl;
-    fetch (apiUrl)
-    .then (function (response) {
-     return response.json();
-    })
-    .then (function (json){
-      let imageUrl = json.sprites.front_default
-    })
-  }
-
   function clearList () {
     pokemonList = [];
   }
@@ -51,7 +40,7 @@ let pokemonRepository = (function () {
       });
   }
 
-  //Get and individual pokemons details
+  //Get an individual pokemons details
   function loadDetails(item) {
     let url = item.detailsUrl;
     return fetch(url)
@@ -82,7 +71,6 @@ let pokemonRepository = (function () {
 
   return {
 
-    getPokePic: getPokePic,
 
     clearList: clearList,
 
@@ -148,10 +136,10 @@ function pokemonSearch() {
     headerWarning("Nothing entered");
   } else {
     let pokemonList = pokemonRepository.getAll();
-
     let result = pokemonList.filter((pokemon) =>
       pokemon.name.toLowerCase().includes(searchParam.toLowerCase())
     );
+
 
     if (result.length === 0) {
       headerWarning("Your search returned no results");
@@ -159,12 +147,17 @@ function pokemonSearch() {
       let children = document.querySelectorAll("li");
       children.forEach(function (child) {
         child.remove();
+      pokemonRepository.clearList();
       });
 
       result.forEach(function (result) {
-        console.log(result);
+        pokemonRepository.loadList(result);
+        pokemonRepository.add(result);
         pokemonRepository.addListItem(result);
       });
+
+      console.log(pokemonRepository.getAll());
+
     }
   }
 }
@@ -180,7 +173,6 @@ function headerWarning(message) {
 }
 
 function cardBuilder(pokemon) {
-
   const card = document.createElement("div"); //set card variable
 
   card.classList.add("sidebar-card");
@@ -206,8 +198,8 @@ function cardBuilder(pokemon) {
   button.classList.add("go-button");
   
   pokemonRepository.loadDetails(pokemon).then(function(item){
-  pokemonImage.src = item.imageUrl;
-  });
+    pokemonImage.src = item.imageUrl;
+  })
 
   //Add everything to the card
   card.appendChild(pokemonImageContainer);
@@ -217,7 +209,6 @@ function cardBuilder(pokemon) {
   //Event handler for card button
   button.addEventListener("click", function () {
     pokemonRepository.loadDetails(pokemon).then(function (item) {
-      console.log(item);
     });
   });
 
