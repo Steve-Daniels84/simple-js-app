@@ -150,8 +150,6 @@ function pokemonSearch() {
       });
 
       result.forEach(function (result) {
-        pokemonRepository.clearList();
-        pokemonRepository.add(result);
         pokemonRepository.addListItem(result);
       });
 
@@ -204,10 +202,9 @@ function cardBuilder(pokemon) {
   card.appendChild(button);
 
   //Event handler for card button
-  button.addEventListener("click", function () {
-    pokemonRepository.loadDetails(pokemon).then(function (item) {
-    });
-  });
+  button.addEventListener ("click",function () { pokemonRepository.loadDetails(pokemon).then(function () {
+      console.log(pokemon);}
+  )});
 
   return card;
 }
