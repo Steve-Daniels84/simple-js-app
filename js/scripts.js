@@ -9,7 +9,7 @@ let pokemonRepository = (function () {
   function add(item) {
     let pokemon = {
       name: item.name,
-      detailUrl: item.detailsUrl
+      detailUrl: item.detailUrl
     };
     pokemonList.push(pokemon);
   }
@@ -27,7 +27,7 @@ let pokemonRepository = (function () {
         json.results.forEach(function (item) {
           let pokemon = {
             name: item.name,
-            detailsUrl: item.url
+            detailUrl: item.url
           };
 
           loadDetails(pokemon);
@@ -42,7 +42,7 @@ let pokemonRepository = (function () {
 
   //Get an individual pokemons details
   function loadDetails(item) {
-    let url = item.detailsUrl;
+    let url = item.detailUrl;
     return fetch(url)
       .then(function (response) {
         return response.json();
