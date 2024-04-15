@@ -51,7 +51,6 @@ let pokemonRepository = (function () {
         item.imageUrl = details.sprites.front_default;
         item.height = details.height;
         item.types = details.types;
-        return item;
       })
       .catch(function (e) {
         console.error(e);
@@ -151,12 +150,10 @@ function pokemonSearch() {
       });
 
       result.forEach(function (result) {
-        pokemonRepository.loadList(result);
+        pokemonRepository.clearList();
         pokemonRepository.add(result);
         pokemonRepository.addListItem(result);
       });
-
-      console.log(pokemonRepository.getAll());
 
     }
   }
@@ -197,9 +194,9 @@ function cardBuilder(pokemon) {
   button.innerText = `GO!`;
   button.classList.add("go-button");
   
-  pokemonRepository.loadDetails(pokemon).then(function(item){
-    pokemonImage.src = item.imageUrl;
-  })
+  pokemonRepository.loadDetails(pokemon).then(function () {
+    pokemonImage.src = pokemon.imageUrl
+});
 
   //Add everything to the card
   card.appendChild(pokemonImageContainer);
@@ -214,3 +211,4 @@ function cardBuilder(pokemon) {
 
   return card;
 }
+
