@@ -25,25 +25,24 @@ body {
 }
 
 .sidebar {
-    max-width: 260px;
+    max-width: 400px;
     height: 100vh;
-    position: absolute;
+    position: relative;
     background-color: rgb(240, 240, 240);
-    transition: left 0.3s ease;
     overflow: hidden;
 }
 
 main {
-    margin-left: 260px;
-    width: 100%;
     height: 100vh;
+    width: 100%;
+    text-align: center;
     background-image: url('../img/background.png');
     background-size: cover;
 }
 
 .sidebar-header-image-container {
     width: 100%;
-    height: 100%;
+    height: 300px;
     margin: 0 auto;
     text-align: center;
     justify-content: center;}
@@ -65,7 +64,7 @@ main {
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
-    height: 150px;
+    height: 250px;
     overflow: hidden;
 }
 
@@ -139,9 +138,6 @@ main {
 }
 
 #search-error {
-    position: absolute;
-    left: 10px;
-    top: 200px;
     font-size: 10px;
     color: red;
 }
@@ -156,9 +152,7 @@ main {
     position: absolute;
     top: 50%;
     left: 50%;
-
-   transform: translate(-50%, -50%);
-
+    transform: translate(-50%, -50%);
 }
 
 .pokeball {
@@ -207,6 +201,38 @@ main {
 
 .pokeball-container {
     display: none;
+}
+
+.modal-container {
+    /* display: none; */
+    width: 100%;
+    height: 100vh;
+    background-color: transparent;
+    border: 5px solid green;
+    overflow: hidden;
+    padding: 5%;
+    justify-content: center;
+}
+
+
+#close-button {
+    background-color: transparent;
+    border: none;
+    border-radius: 200px;
+    font-size: 10px;
+    float: right;
+    margin: 10px 10px 10px 10px;
+}
+
+.modal-box {
+    text-align: left;
+    width: 90%;
+    height: 90%;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    overflow: scroll;
+    margin: 0 auto;
 }
 
 
