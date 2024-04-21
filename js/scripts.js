@@ -61,10 +61,12 @@ let pokemonRepository = (function () {
       });
   }
 
-  function loadModal() {}
+  function loadModal(pokemon) {
+    
+  }
 
   function closeModal() {
-    let modal = document.querySelector("#modal-container");
+    const modal = document.querySelector("#modal-container");
     modal.classList.remove("isOpen");
   }
 
