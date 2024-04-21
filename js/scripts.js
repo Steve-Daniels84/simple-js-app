@@ -1,6 +1,7 @@
 let pokemonRepository = (function () {
   let pokemonList = [];
   let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
+  const closeButton = document.querySelector('#close-button');
 
   function clearList () {
     pokemonList = [];
@@ -50,11 +51,23 @@ let pokemonRepository = (function () {
       .then(function (details) {
         item.imageUrl = details.sprites.front_default;
         item.height = details.height;
+        item.weight = details.weight;
         item.types = details.types;
+        item.stats = details.stats;
+        item.largeImage = details.sprites.other.dream_world.front_default
       })
       .catch(function (e) {
         console.error(e);
       });
+  }
+
+  function loadModal () {
+
+  }
+
+  function closeModal () {
+    let modal = document.querySelector('#modal-container');
+    modal.classList.remove('isOpen');
   }
 
   //Create cards in the sidebar for each pokemon
@@ -67,6 +80,8 @@ let pokemonRepository = (function () {
 
     element.appendChild(listItem);
   }
+
+  closeButton.addEventListener('click', closeModal);
 
   return {
 
@@ -82,6 +97,10 @@ let pokemonRepository = (function () {
     loadList: loadList,
 
     loadDetails: loadDetails,
+
+    loadModal: loadModal,
+
+    closeModal: closeModal
   };
 })();
 
@@ -203,7 +222,7 @@ function cardBuilder(pokemon) {
 
   //Event handler for card button
   button.addEventListener ("click",function () {pokemonRepository.loadDetails(pokemon).then(function () {
-      console.log(`Name: ${pokemon.name} <br> Height: ${pokemon.height} <br> Types: ${pokemon.types}`);}
+      console.log(pokemon.stats)}
   )});
 
   return card;
