@@ -49,6 +49,7 @@ let pokemonRepository = (function () {
         return response.json();
       })
       .then(function (details) {
+        item.name = details.name;
         item.imageUrl = details.sprites.front_default;
         item.height = details.height;
         item.weight = details.weight;
@@ -59,15 +60,6 @@ let pokemonRepository = (function () {
       .catch(function (e) {
         console.error(e);
       });
-  }
-
-  function loadModal(pokemon) {
-    
-  }
-
-  function closeModal() {
-    const modal = document.querySelector("#modal-container");
-    modal.classList.remove("isOpen");
   }
 
   //Create cards in the sidebar for each pokemon
@@ -81,8 +73,6 @@ let pokemonRepository = (function () {
     element.appendChild(listItem);
   }
 
-  closeButton.addEventListener("click", closeModal);
-
   return {
     clearList: clearList,
 
@@ -95,10 +85,6 @@ let pokemonRepository = (function () {
     loadList: loadList,
 
     loadDetails: loadDetails,
-
-    loadModal: loadModal,
-
-    closeModal: closeModal,
   };
 })();
 
@@ -219,9 +205,100 @@ function cardBuilder(pokemon) {
   //Event handler for card button
   button.addEventListener("click", function () {
     pokemonRepository.loadDetails(pokemon).then(function () {
-      console.log(pokemon.stats);
+      detailModalBuilder(pokemon)
     });
   });
 
   return card;
+}
+
+function detailModalBuilder (item) {
+
+const element = document.querySelector ('main');
+element.innerText = '';
+
+  //Create modal container
+  const modalContainer = document.createElement ('div');
+  modalContainer.id = 'modal-container';
+  modalContainer.classList.add ('isOpen');
+  element.appendChild (modalContainer);
+
+  //Create modal box
+  const modal = document.createElement ('div');
+  modal.classList.add ('modal-box');
+  modalContainer.appendChild (modal);
+
+  //Create modal button
+  const modalButton = document.createElement ('button');
+  modalButton.id = 'close-button';
+  modalButton.innerText = 'Close';
+  modal.appendChild (modalButton);
+
+  //Create modal header
+  const modalHeader = document.createElement ('div');
+  modalHeader.classList.add ('modal-header');
+  modal.appendChild (modalHeader);
+
+  //Create container and image
+  const modalImageContainer = document.createElement ('div');
+  modalImageContainer.classList.add ('modal-image-container');
+  modalHeader.appendChild (modalImageContainer);
+
+  const modalImage = document.createElement ('img');
+  modalImage.classList.add ('modal-image');
+  modalImage.src = item.largeImage;
+  modalImageContainer.appendChild (modalImage);
+
+  //Create title
+  const modalTitle = document.createElement ('h1');
+  modalTitle.innerText = item.name;
+  modalHeader.appendChild (modalTitle);
+
+  const modalContentContainer = document.createElement ('div');
+  modalContentContainer.classList.add ('modal-content-container');
+  modal.appendChild (modalContentContainer);
+
+  //Create content boxes
+  function createContentBoxes (name, container) {
+    const content = document.createElement ('div');
+    const contentTitle = document.createElement ('h2');
+    contentTitle.innerText = name;
+    content.classList.add ('modal-content');
+    content.id = (name);
+    content.appendChild (contentTitle);
+    container.appendChild (content);
+
+    if (name === 'General'){
+
+      const generalContent = document.createElement ('p');
+      generalContent.innerText = `Height: ${item.height} 
+      Weight: ${item.weight}`;
+      content.appendChild (generalContent);
+
+    } else if (name === 'Stats') {
+      item.stats.forEach (function (item) {
+        const generalContent = document.createElement ('p');
+        generalContent.innerText = `${item.stat.name}: ${item.base_stat}`;
+        content.appendChild (generalContent);
+      })
+    
+    } else if (name === 'Types') {
+      item.types.forEach (function (item) {
+        const generalContent = document.createElement ('p');
+        generalContent.innerText = `${item.type.name}`;
+        content.appendChild (generalContent);
+      })
+
+
+    }
+  }
+
+  createContentBoxes ('General', modalContentContainer);
+  createContentBoxes ('Stats', modalContentContainer);
+  createContentBoxes ('Types', modalContentContainer);
+
+  modalButton.addEventListener("click", function () {
+    const element = document.querySelector ('#modal-container');
+      element.classList.remove ('isOpen');
+  });
 }
