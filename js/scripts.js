@@ -301,4 +301,16 @@ element.innerText = '';
     const element = document.querySelector ('#modal-container');
       element.classList.remove ('isOpen');
   });
+
+  document.addEventListener ('keydown', (key) => {
+    if (key.key === 'Escape'){
+      const element = document.querySelector ('#modal-container');
+      element.classList.remove ('isOpen');
+    }
+  })
+
+  modalContainer.addEventListener ('click', function (){
+    const element = document.querySelector ('#modal-container');
+      element.classList.remove ('isOpen');
+  })
 }
