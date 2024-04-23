@@ -141,7 +141,7 @@ main {
     font-size: 10px;
     color: red;
     position: relative;
-    
+
 }
 
 #search-reset {
@@ -190,7 +190,11 @@ main {
 
 .modal-image-container {
     padding: 20px;
-    max-width: 250px;
+    width: 250px;
+    min-width: 200px;
+    height: 250px;
+    min-height: 200px;
+
 }
 
 .modal-image {
@@ -207,8 +211,7 @@ main {
     width: 100px;
     display: flex;
     margin: 0 auto;
-    padding: 10px;
-    
+    padding: 30px;    
 }
 
 .modal-content P {
