@@ -271,21 +271,60 @@ element.innerText = '';
     if (name === 'General'){
 
       const generalContent = document.createElement ('p');
+      
       generalContent.innerText = `Height: ${item.height} 
       Weight: ${item.weight}`;
       content.appendChild (generalContent);
 
     } else if (name === 'Stats') {
-      item.stats.forEach (function (item) {
-        const generalContent = document.createElement ('p');
-        generalContent.innerText = `${item.stat.name}: ${item.base_stat}`;
-        content.appendChild (generalContent);
-      })
-    
+      item.stats.forEach(function (item) {
+          const barContainer = document.createElement('div');
+          barContainer.classList.add('progress');
+          barContainer.id = item.stat.name;
+  
+          const barLabel = document.createElement('label');
+          barLabel.for = item.stat.name;
+          barLabel.classList.add('stat-label');
+          barLabel.innerText = item.stat.name;
+  
+          const bar = document.createElement('div');
+          bar.classList.add('progress-bar');
+          bar.style.backgroundColor = '#dc3545'
+          bar.role = 'progressbar'; 
+          bar.style.width = '0%'; 
+          bar.ariaValueNow = 0; 
+          bar.ariaValueMax = 255;
+          bar.ariaValueMin = 0;
+          bar.innerText = item.base_stat;
+  
+          // Animate the progress bar width from 0% to the desired value
+          let width = 0;
+          const animationDuration = 500; // Animation duration in milliseconds (1 second)
+          const frameRate = 10; 
+          const increment = item.base_stat / (animationDuration / frameRate);
+          const id = setInterval(frame, frameRate);
+  
+          function frame() {
+              if (width >= item.base_stat / 255 * 100) {
+                  clearInterval(id);
+              } else {
+                  width += increment;
+                  bar.style.width = width + '%';
+                  bar.ariaValueNow = Math.round(width);
+              }
+          }
+  
+          content.appendChild(barLabel);
+          content.appendChild(barContainer);
+          barContainer.appendChild(bar);
+      });
+      
     } else if (name === 'Types') {
       item.types.forEach (function (item) {
-        const generalContent = document.createElement ('p');
-        generalContent.innerText = `${item.type.name}`;
+        const generalContent = document.createElement ('div');
+        generalContent.innerText = item.type.name;
+        generalContent.classList.add ('type-card');
+        generalContent.style.backgroundColor = `var(--${item.type.name})`
         content.appendChild (generalContent);
       })
 

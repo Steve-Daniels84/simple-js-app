@@ -3,13 +3,26 @@
     --light-background-color: white;
     --dark-text-color: white;
     --light-text-color: black;
+    --grass: rgb(5, 212, 5);
+    --electric: rgb(199, 199, 7);
+    --psychic: purple;
+    --water: blue;
+    --ice: aqua;
+    --dragon: rgb(2, 114, 2);
+    --dark: black;
+    --fairy: pink;
+    --unknown: darkgrey;
+    --shadow: grey;
+    --steel: rgb(155, 154, 154);
     --fire: red;
-    --grass: lightgreen;
-    --water: aqua;
-    --poison: purple;
-    --bug: rgb(167, 210, 24);
-    --flying: grey;
-    --seed:orange;
+    --bug: brown;
+    --ghost: white;
+    --rock: rgb(250, 250, 214);
+    --ground: rgb(173, 121, 79);
+    --flying: skyblue;
+    --poison: rgb(148, 115, 6);
+    --fighting: darkblue;
+    --normal: transparent;
 }
 
 *
@@ -216,6 +229,20 @@ main {
 
 .modal-content P {
     text-align: left;
+}
+
+.stat-label {
+    text-align: left;
+}
+
+.progress {
+    margin: 10px;
+}
+
+.type-card {
+    background-color: none;
+    margin: 10px;
+    border-radius: 10px;
 }
 
 
