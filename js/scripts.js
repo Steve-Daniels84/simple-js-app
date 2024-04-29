@@ -132,7 +132,7 @@ searchReset.addEventListener("click", function () {
   pokemonRepository.loadList();
 });
 
-//search for user entered search input
+//Search Function
 function pokemonSearch() {
   if (searchParam === "") {
     headerWarning("Nothing entered");
@@ -205,7 +205,7 @@ function cardBuilder(pokemon) {
   //Event handler for card button
   button.addEventListener("click", function () {
     pokemonRepository.loadDetails(pokemon).then(function () {
-      detailModalBuilder(pokemon)
+      detailModalBuilder(pokemon);
     });
   });
 
@@ -327,8 +327,6 @@ element.innerText = '';
         generalContent.style.backgroundColor = `var(--${item.type.name})`
         content.appendChild (generalContent);
       })
-
-
     }
   }
 
@@ -339,17 +337,27 @@ element.innerText = '';
   modalButton.addEventListener("click", function () {
     const element = document.querySelector ('#modal-container');
       element.classList.remove ('isOpen');
+      const sidebar = document.querySelector ('.sidebar');
+      sidebar.scrollIntoView();
   });
 
   document.addEventListener ('keydown', (key) => {
     if (key.key === 'Escape'){
       const element = document.querySelector ('#modal-container');
       element.classList.remove ('isOpen');
+      const sidebar = document.querySelector ('.sidebar');
+      sidebar.scrollIntoView();
     }
   })
 
   modalContainer.addEventListener ('click', function (){
     const element = document.querySelector ('#modal-container');
       element.classList.remove ('isOpen');
+      const sidebar = document.querySelector ('.sidebar');
+      sidebar.scrollIntoView();
   })
+
+  const main = document.querySelector ('main');
+  main.scrollIntoView();
+ 
 }
