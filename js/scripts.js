@@ -174,7 +174,7 @@ function cardBuilder(pokemon) {
   card.classList.add("list-group-item");
   card.classList.add("d-flex");
   card.classList.add("p-2");
-  // card.classList.add("mr-2");
+  card.classList.add("sidebar-card");
 
 
   //Create card child elements
