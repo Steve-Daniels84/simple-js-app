@@ -169,29 +169,47 @@ function headerWarning(message) {
 }
 
 function cardBuilder(pokemon) {
-  const card = document.createElement("div"); //set card variable
+  const card = document.createElement("li"); //set card variable
 
-  card.classList.add("sidebar-card");
+  card.classList.add("list-group-item");
+  card.classList.add("d-flex");
+  card.classList.add("p-2");
+  // card.classList.add("mr-2");
+
 
   //Create card child elements
   let button = document.createElement("button");
-  let cardTitle = document.createElement("p");
+  let buttonContainer = document.createElement("div");
+  let cardTitle = document.createElement("h3");
+  let cardTitleContainer = document.createElement("div")
   let pokemonImageContainer = document.createElement("div");
   let pokemonImage = document.createElement("img");
 
-  pokemonImage.classList.add("card-image");
+  pokemonImage.classList.add("img-thumbnail");
 
   //Add card image container and image
-  pokemonImageContainer.classList.add("card-image-container");
+  pokemonImageContainer.classList.add("container-fluid");
   pokemonImageContainer.appendChild(pokemonImage);
 
   //Add card title content and class
   cardTitle.classList.add("card-title");
+  cardTitle.classList.add("h3");
+
   cardTitle.innerText = `${pokemon.name}`;
+
+  cardTitleContainer.classList.add ('container')
+  cardTitleContainer.appendChild (cardTitle);
+
+
 
   //Add card button content and class
   button.innerText = `GO!`;
-  button.classList.add("go-button");
+  button.type = 'button'
+  button.classList.add("btn");
+  button.classList.add("btn-danger");
+  button.classList.add("btn-sm");
+
+  buttonContainer.appendChild(button);
 
   pokemonRepository.loadDetails(pokemon).then(function () {
     pokemonImage.src = pokemon.imageUrl;
@@ -199,8 +217,8 @@ function cardBuilder(pokemon) {
 
   //Add everything to the card
   card.appendChild(pokemonImageContainer);
-  card.appendChild(cardTitle);
-  card.appendChild(button);
+  card.appendChild(cardTitleContainer);
+  card.appendChild(buttonContainer);
 
   //Event handler for card button
   button.addEventListener("click", function () {
