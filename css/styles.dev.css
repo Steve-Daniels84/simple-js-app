@@ -87,74 +87,7 @@ main {
     color: black;
 }
 
-#modal-container {
-    display: none;
-}
-
-#modal-container.isOpen {
-    display: unset;
-    width: 100%;
-    background-color: transparent;
-    overflow: hidden;
-    padding: 5%;
-    justify-content: center;
-}
-
-#close-button {
-    background-color: transparent;
-    border: none;
-    border-radius: 200px;
-    font-size: 20px;
-    float: right;
-    margin: 10px 10px 10px 10px;
-}
-
-.modal-box {
-    text-align: left;
-    width: 90%;
-    background-color: rgba(255, 255, 255, .15);  
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    overflow: scroll;
-    margin: 0 auto;
-}
-
-.modal-box h1 {
-   justify-self: left;
-}
-
-.modal-image-container {
-    padding: 20px;
-    width: 250px;
-    min-width: 200px;
-    height: 250px;
-    min-height: 200px;
-
-}
-
-.modal-image {
-    width: 100%;
-    height: 100%;
-}
-
-.modal-content-container {
-    display: flex;
-    text-align: center;
-}
-
-.modal-content {
-    width: 100px;
-    display: flex;
-    margin: 0 auto;
-    padding: 30px;    
-}
-
 .modal-content P {
-    text-align: left;
-}
-
-.stat-label {
     text-align: left;
 }
 
@@ -163,7 +96,7 @@ main {
 }
 
 .type-card {
-    background-color: none;
+    background-color: var(--grass);
     margin: 10px;
     border-radius: 10px;
 }

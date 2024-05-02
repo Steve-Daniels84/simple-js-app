@@ -182,11 +182,12 @@ function cardBuilder(pokemon) {
 
   buttonContainer.append(button);
 
+  //get 
   pokemonRepository.loadDetails(pokemon).then(function () {
     pokemonImage.attr('src', pokemon.imageUrl);
   });
 
-  //Add everything to the card
+  //Add everything to the sidebar card
   card.append(pokemonImageContainer);
   card.append(cardTitleContainer);
   card.append(buttonContainer);
@@ -201,18 +202,30 @@ function cardBuilder(pokemon) {
 }
 
 function modalBuilder (pokemon) {
-  const modal = $('#detailModalLabel');
-  let stats = $(pokemon.stats);
 
+  //reset types container
+  const element = $('#types');
+  element.empty();
+
+  const height = $('#height');
+  const weight = $('#weight');
+
+  height.text('Height: ' + pokemon.height);
+  weight.text('Weight: ' + pokemon.weight);
+
+  const modal = $('#detailModalLabel');
+  const stats = $(pokemon.stats);
+  const types = $(pokemon.types);
+
+  //capitalise first letter of pokemon name and add it as modal title
   const name = pokemon.name;
   const title = name.charAt(0).toUpperCase() + name.slice(1);
-  console.log(title);
-
   modal.text(title);
 
+  //set the main pokemon image source
   $('#pokemon-image').attr('src', pokemon.largeImage);
 
-
+  //add stats
   stats.each(function (index, item){
     const element = $('#' + item.stat.name);
     const parent = $('.' + item.stat.name);
@@ -221,155 +234,19 @@ function modalBuilder (pokemon) {
     element.text(item.base_stat);
     element.attr('style','width:' + (item.base_stat/255) * 100 + '%');
   })
+
+  //add types cards
+  types.each(function (index, item) {
+    const element = $('#types');
+    const type = $('<div class="type-card ' + item.type.name + '">' + item.type.name + '</div>');
+
+    //change type container background color
+    const computedStyle = getComputedStyle(document.documentElement);
+    const typeVar = computedStyle.getPropertyValue('--' + item.type.name);
+    type.css('background-color', typeVar);
+
+    element.append(type);
+  })
 }
 
-// function detailModalBuilder (item) {
-
-// const element = document.querySelector ('main');
-// element.innerText = '';
-
-//   //Create modal container
-//   const modalContainer = document.createElement ('div');
-//   modalContainer.id = 'modal-container';
-//   modalContainer.classList.add ('isOpen');
-//   element.appendChild (modalContainer);
-
-//   //Create modal box
-//   const modal = document.createElement ('div');
-//   modal.classList.add ('modal-box');
-//   modalContainer.appendChild (modal);
-
-//   //Create modal button
-//   const modalButton = document.createElement ('button');
-//   modalButton.id = 'close-button';
-//   modalButton.innerText = 'Close';
-//   modal.appendChild (modalButton);
-
-//   //Create modal header
-//   const modalHeader = document.createElement ('div');
-//   modalHeader.classList.add ('modal-header');
-//   modal.appendChild (modalHeader);
-
-//   //Create container and image
-//   const modalImageContainer = document.createElement ('div');
-//   modalImageContainer.classList.add ('modal-image-container');
-//   modalHeader.appendChild (modalImageContainer);
-
-//   const modalImage = document.createElement ('img');
-//   modalImage.classList.add ('modal-image');
-//   modalImage.src = item.largeImage;
-//   modalImageContainer.appendChild (modalImage);
-
-//   //Create title
-//   const modalTitle = document.createElement ('h1');
-//   modalTitle.innerText = item.name;
-//   modalHeader.appendChild (modalTitle);
-
-//   const modalContentContainer = document.createElement ('div');
-//   modalContentContainer.classList.add ('modal-content-container');
-//   modal.appendChild (modalContentContainer);
-
-//   //Create content boxes
-//   function createContentBoxes (name, container) {
-//     const content = document.createElement ('div');
-//     const contentTitle = document.createElement ('h2');
-//     contentTitle.innerText = name;
-//     content.classList.add ('modal-content');
-//     content.id = (name);
-//     content.appendChild (contentTitle);
-//     container.appendChild (content);
-
-//     if (name === 'General'){
-
-//       const generalContent = document.createElement ('p');
-      
-//       generalContent.innerText = `Height: ${item.height} 
-//       Weight: ${item.weight}`;
-//       content.appendChild (generalContent);
-
-//     } else if (name === 'Stats') {
-//       item.stats.forEach(function (item) {
-//           const barContainer = document.createElement('div');
-//           barContainer.classList.add('progress');
-//           barContainer.id = item.stat.name;
-  
-//           const barLabel = document.createElement('label');
-//           barLabel.for = item.stat.name;
-//           barLabel.classList.add('stat-label');
-//           barLabel.innerText = item.stat.name;
-  
-//           const bar = document.createElement('div');
-//           bar.classList.add('progress-bar');
-//           bar.style.backgroundColor = '#dc3545'
-//           bar.role = 'progressbar'; 
-//           bar.style.width = '0%'; 
-//           bar.ariaValueNow = 0; 
-//           bar.ariaValueMax = 255;
-//           bar.ariaValueMin = 0;
-//           bar.innerText = item.base_stat;
-  
-//           // Animate the progress bar width from 0% to the desired value
-//           let width = 0;
-//           const animationDuration = 500; // Animation duration in milliseconds (1 second)
-//           const frameRate = 10; 
-//           const increment = item.base_stat / (animationDuration / frameRate);
-//           const id = setInterval(frame, frameRate);
-  
-//           function frame() {
-//               if (width >= item.base_stat / 255 * 100) {
-//                   clearInterval(id);
-//               } else {
-//                   width += increment;
-//                   bar.style.width = width + '%';
-//                   bar.ariaValueNow = Math.round(width);
-//               }
-//           }
-  
-//           content.appendChild(barLabel);
-//           content.appendChild(barContainer);
-//           barContainer.appendChild(bar);
-//       });
-      
-//     } else if (name === 'Types') {
-//       item.types.forEach (function (item) {
-//         const generalContent = document.createElement ('div');
-//         generalContent.innerText = item.type.name;
-//         generalContent.classList.add ('type-card');
-//         generalContent.style.backgroundColor = `var(--${item.type.name})`
-//         content.appendChild (generalContent);
-//       })
-//     }
-//   }
-
-//   createContentBoxes ('General', modalContentContainer);
-//   createContentBoxes ('Stats', modalContentContainer);
-//   createContentBoxes ('Types', modalContentContainer);
-
-//   modalButton.addEventListener("click", function () {
-//     const element = document.querySelector ('#modal-container');
-//       element.classList.remove ('isOpen');
-//       const sidebar = document.querySelector ('.sidebar');
-//       sidebar.scrollIntoView();
-//   });
-
-//   document.addEventListener ('keydown', (key) => {
-//     if (key.key === 'Escape'){
-//       const element = document.querySelector ('#modal-container');
-//       element.classList.remove ('isOpen');
-//       const sidebar = document.querySelector ('.sidebar');
-//       sidebar.scrollIntoView();
-//     }
-//   })
-
-//   modalContainer.addEventListener ('click', function (){
-//     const element = document.querySelector ('#modal-container');
-//       element.classList.remove ('isOpen');
-//       const sidebar = document.querySelector ('.sidebar');
-//       sidebar.scrollIntoView();
-//   })
-
-//   const main = document.querySelector ('main');
-//   main.scrollIntoView();
- 
-// }
 
