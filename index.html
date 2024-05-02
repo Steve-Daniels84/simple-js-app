@@ -7,7 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Simple JS App</title>
   </head>
-  <body class="container w-100vw m-0 p-0 ">
+  <body class="d-flex">
+    
     <div class="sidebar">
       <div class="container mw-100 m-0 p-0 " style="background: linear-gradient(to bottom left, #f13434, #b80101); ">
           <div class="container text-center  ">
@@ -38,7 +39,64 @@
       </div>
     </div>
     <main>
+
+<!-- Modal -->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container text-center">
+          <div class="row">
+            <div class="col">
+              <img class="img-fluid" id="pokemon-image" src="https://placehold.co/400"><img>
+              <div class="d-block">
+                <p>Height:</p>
+                <p>Weight:</p>
+                <div class="container" id="types">
+
+                </div>
+              </div>
+            </div>
+            <div class="col" id="stats">
+              <h3 class="h3">Stats</h3>
+              <label for="hp">HP</label>
+              <div class="progress hp" role="progressbar" aria-label="Animated striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="255">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"  id="hp" style="width: 0%"></div>
+              </div>
+              <label for="speed">Speed</label>
+              <div class="progress speed" role="progressbar" aria-label="Animated striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="255">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" id="speed" style="width: 0%"></div>
+              </div>
+              <label for="attack">Attack</label>
+              <div class="progress attack" role="progressbar" aria-label="Animated striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="255">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" id="attack" style="width: 0%"></div>
+              </div>
+              <label for="defense">Defense</label>
+              <div class="progress defense" role="progressbar" aria-label="Animated striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="255">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" id="defense" style="width: 0%"></div>
+              </div>
+              <label for="special-attack">Special Attack</label>
+              <div class="progress special-attack" role="progressbar" aria-label="Animated striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="255">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" id="special-attack" style="width: 0%"></div>
+              </div>
+              <label for="special-defense">Special Defense</label>
+              <div class="progress special-defense" role="progressbar" aria-label="Animated striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="255">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" id="special-defense" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     </main>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="./js/promise-polyfill.js"></script>
