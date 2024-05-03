@@ -64,13 +64,9 @@ let pokemonRepository = (function () {
 
   //Create cards in the sidebar for each pokemon
   function addListItem(pokemon) {
-    let element = document.querySelector(".pokemon-list");
+    let element = $(".pokemon-list");
     let card = cardBuilder(pokemon);
-    let listItem = document.createElement("li");
-
-    listItem.appendChild(card);
-
-    element.appendChild(listItem);
+    element.append(card);
   }
 
   return {
@@ -169,195 +165,90 @@ function headerWarning(message) {
 }
 
 function cardBuilder(pokemon) {
-  const card = document.createElement("div"); //set card variable
-
-  card.classList.add("sidebar-card");
+  const card = $('<li class="list-group-item d-flex p-2 sidebar-card"></li>');
 
   //Create card child elements
-  let button = document.createElement("button");
-  let cardTitle = document.createElement("p");
-  let pokemonImageContainer = document.createElement("div");
-  let pokemonImage = document.createElement("img");
+  let button = $(
+    '<button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#detailModal">GO!</button>'
+  );
+  let buttonContainer = $("<div></div>");
+  let cardTitle = $('<h4 class="card-title h4">' + pokemon.name + "</h4>");
+  let cardTitleContainer = $('<div class="container"></div>');
+  let pokemonImageContainer = $('<div class="container-fluid"></div>');
+  let pokemonImage = $('<img class="img-thumbnail" alt="An image of a "' + pokemon.name + '></img>');
 
-  pokemonImage.classList.add("card-image");
+  pokemonImageContainer.append(pokemonImage);
+  cardTitleContainer.append(cardTitle);
 
-  //Add card image container and image
-  pokemonImageContainer.classList.add("card-image-container");
-  pokemonImageContainer.appendChild(pokemonImage);
+  buttonContainer.append(button);
 
-  //Add card title content and class
-  cardTitle.classList.add("card-title");
-  cardTitle.innerText = `${pokemon.name}`;
-
-  //Add card button content and class
-  button.innerText = `GO!`;
-  button.classList.add("go-button");
-
+  //get
   pokemonRepository.loadDetails(pokemon).then(function () {
-    pokemonImage.src = pokemon.imageUrl;
+    pokemonImage.attr("src", pokemon.imageUrl);
   });
 
-  //Add everything to the card
-  card.appendChild(pokemonImageContainer);
-  card.appendChild(cardTitle);
-  card.appendChild(button);
+  //Add everything to the sidebar card
+  card.append(pokemonImageContainer);
+  card.append(cardTitleContainer);
+  card.append(buttonContainer);
 
-  //Event handler for card button
-  button.addEventListener("click", function () {
-    pokemonRepository.loadDetails(pokemon).then(function () {
-      detailModalBuilder(pokemon);
-    });
+  button.on("click", function (event) {
+    modalBuilder(pokemon);
   });
 
   return card;
 }
 
-function detailModalBuilder (item) {
+function modalBuilder(pokemon) {
+  //reset types container
+  const element = $("#types");
+  element.empty();
 
-const element = document.querySelector ('main');
-element.innerText = '';
+  const height = $("#height");
+  const weight = $("#weight");
 
-  //Create modal container
-  const modalContainer = document.createElement ('div');
-  modalContainer.id = 'modal-container';
-  modalContainer.classList.add ('isOpen');
-  element.appendChild (modalContainer);
+  height.text("Height: " + pokemon.height);
+  weight.text("Weight: " + pokemon.weight);
 
-  //Create modal box
-  const modal = document.createElement ('div');
-  modal.classList.add ('modal-box');
-  modalContainer.appendChild (modal);
+  const modal = $("#detailModalLabel");
+  const stats = $(pokemon.stats);
+  const types = $(pokemon.types);
 
-  //Create modal button
-  const modalButton = document.createElement ('button');
-  modalButton.id = 'close-button';
-  modalButton.innerText = 'Close';
-  modal.appendChild (modalButton);
+  //capitalise first letter of pokemon name and add it as modal title
+  const name = pokemon.name;
+  const title = name.charAt(0).toUpperCase() + name.slice(1);
+  modal.text(title);
 
-  //Create modal header
-  const modalHeader = document.createElement ('div');
-  modalHeader.classList.add ('modal-header');
-  modal.appendChild (modalHeader);
+  //set the main pokemon image source and alt value
+  $("#pokemon-image").attr("src", pokemon.largeImage);
+  $("#pokemon-image").attr("alt", "A large image of a " + pokemon.name);
 
-  //Create container and image
-  const modalImageContainer = document.createElement ('div');
-  modalImageContainer.classList.add ('modal-image-container');
-  modalHeader.appendChild (modalImageContainer);
+  //add stats
+  stats.each(function (index, item) {
+    const element = $("#" + item.stat.name);
+    const parent = $("." + item.stat.name);
 
-  const modalImage = document.createElement ('img');
-  modalImage.classList.add ('modal-image');
-  modalImage.src = item.largeImage;
-  modalImageContainer.appendChild (modalImage);
-
-  //Create title
-  const modalTitle = document.createElement ('h1');
-  modalTitle.innerText = item.name;
-  modalHeader.appendChild (modalTitle);
-
-  const modalContentContainer = document.createElement ('div');
-  modalContentContainer.classList.add ('modal-content-container');
-  modal.appendChild (modalContentContainer);
-
-  //Create content boxes
-  function createContentBoxes (name, container) {
-    const content = document.createElement ('div');
-    const contentTitle = document.createElement ('h2');
-    contentTitle.innerText = name;
-    content.classList.add ('modal-content');
-    content.id = (name);
-    content.appendChild (contentTitle);
-    container.appendChild (content);
-
-    if (name === 'General'){
-
-      const generalContent = document.createElement ('p');
-      
-      generalContent.innerText = `Height: ${item.height} 
-      Weight: ${item.weight}`;
-      content.appendChild (generalContent);
-
-    } else if (name === 'Stats') {
-      item.stats.forEach(function (item) {
-          const barContainer = document.createElement('div');
-          barContainer.classList.add('progress');
-          barContainer.id = item.stat.name;
-  
-          const barLabel = document.createElement('label');
-          barLabel.for = item.stat.name;
-          barLabel.classList.add('stat-label');
-          barLabel.innerText = item.stat.name;
-  
-          const bar = document.createElement('div');
-          bar.classList.add('progress-bar');
-          bar.style.backgroundColor = '#dc3545'
-          bar.role = 'progressbar'; 
-          bar.style.width = '0%'; 
-          bar.ariaValueNow = 0; 
-          bar.ariaValueMax = 255;
-          bar.ariaValueMin = 0;
-          bar.innerText = item.base_stat;
-  
-          // Animate the progress bar width from 0% to the desired value
-          let width = 0;
-          const animationDuration = 500; // Animation duration in milliseconds (1 second)
-          const frameRate = 10; 
-          const increment = item.base_stat / (animationDuration / frameRate);
-          const id = setInterval(frame, frameRate);
-  
-          function frame() {
-              if (width >= item.base_stat / 255 * 100) {
-                  clearInterval(id);
-              } else {
-                  width += increment;
-                  bar.style.width = width + '%';
-                  bar.ariaValueNow = Math.round(width);
-              }
-          }
-  
-          content.appendChild(barLabel);
-          content.appendChild(barContainer);
-          barContainer.appendChild(bar);
-      });
-      
-    } else if (name === 'Types') {
-      item.types.forEach (function (item) {
-        const generalContent = document.createElement ('div');
-        generalContent.innerText = item.type.name;
-        generalContent.classList.add ('type-card');
-        generalContent.style.backgroundColor = `var(--${item.type.name})`
-        content.appendChild (generalContent);
-      })
-    }
-  }
-
-  createContentBoxes ('General', modalContentContainer);
-  createContentBoxes ('Stats', modalContentContainer);
-  createContentBoxes ('Types', modalContentContainer);
-
-  modalButton.addEventListener("click", function () {
-    const element = document.querySelector ('#modal-container');
-      element.classList.remove ('isOpen');
-      const sidebar = document.querySelector ('.sidebar');
-      sidebar.scrollIntoView();
+    parent.attr("aria-valuenow", item.base_stat);
+    element.text(item.base_stat);
+    element.attr("style", "width:" + (item.base_stat / 255) * 100 + "%");
   });
 
-  document.addEventListener ('keydown', (key) => {
-    if (key.key === 'Escape'){
-      const element = document.querySelector ('#modal-container');
-      element.classList.remove ('isOpen');
-      const sidebar = document.querySelector ('.sidebar');
-      sidebar.scrollIntoView();
-    }
-  })
+  //add types cards
+  types.each(function (index, item) {
+    const element = $("#types");
+    const type = $(
+      '<div class="type-card ' +
+        item.type.name +
+        '">' +
+        item.type.name +
+        "</div>"
+    );
 
-  modalContainer.addEventListener ('click', function (){
-    const element = document.querySelector ('#modal-container');
-      element.classList.remove ('isOpen');
-      const sidebar = document.querySelector ('.sidebar');
-      sidebar.scrollIntoView();
-  })
+    //change type container background color
+    const computedStyle = getComputedStyle(document.documentElement);
+    const typeVar = computedStyle.getPropertyValue("--" + item.type.name);
+    type.css("background-color", typeVar);
 
-  const main = document.querySelector ('main');
-  main.scrollIntoView();
- 
+    element.append(type);
+  });
 }

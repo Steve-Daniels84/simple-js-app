@@ -25,112 +25,35 @@
     --normal: transparent;
 }
 
-*
-{
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-}
-
 body {
     display: flex;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.sidebar {
-    max-width: 400px;
-    height: 100vh;
-    position: relative;
-    background-color: rgb(240, 240, 240);
-    overflow: hidden;
 }
 
 main {
-    height: 100vh;
-    width: 100%;
-    text-align: center;
+    width: 100vw;
+    height: 100vh; /* Set main component height to 100% of viewport height */
     background-image: url('../img/background.png');
     background-size: cover;
-}
-
-.sidebar-header-image-container {
-    width: 100%;
-    height: 300px;
-    margin: 0 auto;
-    text-align: center;
-    justify-content: center;}
-
-.sidebar-header-image {
-    position: relative;
-    width:35%;
-}
-
-.sidebar-title {
-    position: relative;
-    color: whitesmoke;
-}
-
-.sidebar-header-container {
-    background: linear-gradient(to bottom left, #f13434, #b80101);
-    background-clip: padding-box;
-    text-align: right;
     background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
 }
 
-.pokemon-list  {
-    padding: 0;
-    margin: 0;
+.sidebar {
+    width: 400px;
+    min-width: 350px;
 }
 
 .pokemon-list-container {
     overflow: scroll;
-    height: 70vh;
-}
-
-.pokemon-list li {
-    list-style-type: none;
-    width: 100%;
-    height: 60px;
-    transition: scale 0.3s ease;
-    border-radius: 0 20px 0 20px;
-    color: var(--dark-text-color);
-    margin-bottom: 20px;
 }
 
 .sidebar-card {
-    display: flex;
-    justify-content: space-between;
-    background-color: white;
-    color: #210c3d;
-    width: 100%;
-    height: 70px;
-    padding: 15px;
-    text-align: center;
     align-items: center;
     transition: box-shadow 0.5s ease-in-out;
     margin-bottom: 10px;
 }
 
-.card-image {
-    border-radius: 50px;
-    scale: 0.5;
-}
-
-.go-button {
-    margin-left: 10px;
-    border-radius: 10px;
-    background-color: #f2320c;
-    color: aliceblue;
-    font-size: small;
-    justify-content: space-between;
-}
-
 .pokemon-list li:hover {
-    scale: 0.95;
+    scale: 0.98;
 }
 
 .sidebar-card:hover {
@@ -160,74 +83,7 @@ main {
     color: black;
 }
 
-#modal-container {
-    display: none;
-}
-
-#modal-container.isOpen {
-    display: unset;
-    width: 100%;
-    background-color: transparent;
-    overflow: hidden;
-    padding: 5%;
-    justify-content: center;
-}
-
-#close-button {
-    background-color: transparent;
-    border: none;
-    border-radius: 200px;
-    font-size: 20px;
-    float: right;
-    margin: 10px 10px 10px 10px;
-}
-
-.modal-box {
-    text-align: left;
-    width: 90%;
-    background-color: rgba(255, 255, 255, .15);  
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    overflow: scroll;
-    margin: 0 auto;
-}
-
-.modal-box h1 {
-   justify-self: left;
-}
-
-.modal-image-container {
-    padding: 20px;
-    width: 250px;
-    min-width: 200px;
-    height: 250px;
-    min-height: 200px;
-
-}
-
-.modal-image {
-    width: 100%;
-    height: 100%;
-}
-
-.modal-content-container {
-    display: flex;
-    text-align: center;
-}
-
-.modal-content {
-    width: 100px;
-    display: flex;
-    margin: 0 auto;
-    padding: 30px;    
-}
-
 .modal-content P {
-    text-align: left;
-}
-
-.stat-label {
     text-align: left;
 }
 
@@ -236,13 +92,13 @@ main {
 }
 
 .type-card {
-    background-color: none;
+    background-color: var(--grass);
     margin: 10px;
     border-radius: 10px;
 }
 
 
-@media screen and (min-width: 0px) and (max-width: 700px){
+@media screen and (min-width: 0px) and (max-width: 800px){
 
     body {
         display: block;
@@ -250,6 +106,7 @@ main {
 
     .sidebar {
         width: 100%;
+        height: 100vh;
         max-width: none;
     }
 
