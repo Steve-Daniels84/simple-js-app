@@ -168,23 +168,23 @@ function cardBuilder(pokemon) {
   const card = $('<li class="list-group-item d-flex p-2 sidebar-card"></li>');
 
   //Create card child elements
-  let button = $('<button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#detailModal">GO!</button>'); 
-  let buttonContainer = $('<div></div>'); 
-  let cardTitle = $('<h4 class="card-title h4">' + pokemon.name + '</h4>'); 
-  let cardTitleContainer = $('<div class="container"></div>'); 
-  let pokemonImageContainer = $('<div class="container-fluid"></div>'); 
+  let button = $(
+    '<button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#detailModal">GO!</button>'
+  );
+  let buttonContainer = $("<div></div>");
+  let cardTitle = $('<h4 class="card-title h4">' + pokemon.name + "</h4>");
+  let cardTitleContainer = $('<div class="container"></div>');
+  let pokemonImageContainer = $('<div class="container-fluid"></div>');
   let pokemonImage = $('<img class="img-thumbnail"></img>');
 
-
-
   pokemonImageContainer.append(pokemonImage);
-  cardTitleContainer.append (cardTitle);
+  cardTitleContainer.append(cardTitle);
 
   buttonContainer.append(button);
 
-  //get 
+  //get
   pokemonRepository.loadDetails(pokemon).then(function () {
-    pokemonImage.attr('src', pokemon.imageUrl);
+    pokemonImage.attr("src", pokemon.imageUrl);
   });
 
   //Add everything to the sidebar card
@@ -192,28 +192,25 @@ function cardBuilder(pokemon) {
   card.append(cardTitleContainer);
   card.append(buttonContainer);
 
-  button.on('click', function (event){
-  modalBuilder(pokemon)
-  })
-
-
+  button.on("click", function (event) {
+    modalBuilder(pokemon);
+  });
 
   return card;
 }
 
-function modalBuilder (pokemon) {
-
+function modalBuilder(pokemon) {
   //reset types container
-  const element = $('#types');
+  const element = $("#types");
   element.empty();
 
-  const height = $('#height');
-  const weight = $('#weight');
+  const height = $("#height");
+  const weight = $("#weight");
 
-  height.text('Height: ' + pokemon.height);
-  weight.text('Weight: ' + pokemon.weight);
+  height.text("Height: " + pokemon.height);
+  weight.text("Weight: " + pokemon.weight);
 
-  const modal = $('#detailModalLabel');
+  const modal = $("#detailModalLabel");
   const stats = $(pokemon.stats);
   const types = $(pokemon.types);
 
@@ -223,30 +220,34 @@ function modalBuilder (pokemon) {
   modal.text(title);
 
   //set the main pokemon image source
-  $('#pokemon-image').attr('src', pokemon.largeImage);
+  $("#pokemon-image").attr("src", pokemon.largeImage);
 
   //add stats
-  stats.each(function (index, item){
-    const element = $('#' + item.stat.name);
-    const parent = $('.' + item.stat.name);
+  stats.each(function (index, item) {
+    const element = $("#" + item.stat.name);
+    const parent = $("." + item.stat.name);
 
-    parent.attr('aria-valuenow',item.base_stat);
+    parent.attr("aria-valuenow", item.base_stat);
     element.text(item.base_stat);
-    element.attr('style','width:' + (item.base_stat/255) * 100 + '%');
-  })
+    element.attr("style", "width:" + (item.base_stat / 255) * 100 + "%");
+  });
 
   //add types cards
   types.each(function (index, item) {
-    const element = $('#types');
-    const type = $('<div class="type-card ' + item.type.name + '">' + item.type.name + '</div>');
+    const element = $("#types");
+    const type = $(
+      '<div class="type-card ' +
+        item.type.name +
+        '">' +
+        item.type.name +
+        "</div>"
+    );
 
     //change type container background color
     const computedStyle = getComputedStyle(document.documentElement);
-    const typeVar = computedStyle.getPropertyValue('--' + item.type.name);
-    type.css('background-color', typeVar);
+    const typeVar = computedStyle.getPropertyValue("--" + item.type.name);
+    type.css("background-color", typeVar);
 
     element.append(type);
-  })
+  });
 }
-
-
