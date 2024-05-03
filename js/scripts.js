@@ -175,7 +175,7 @@ function cardBuilder(pokemon) {
   let cardTitle = $('<h4 class="card-title h4">' + pokemon.name + "</h4>");
   let cardTitleContainer = $('<div class="container"></div>');
   let pokemonImageContainer = $('<div class="container-fluid"></div>');
-  let pokemonImage = $('<img class="img-thumbnail"></img>');
+  let pokemonImage = $('<img class="img-thumbnail" alt="An image of a "' + pokemon.name + '></img>');
 
   pokemonImageContainer.append(pokemonImage);
   cardTitleContainer.append(cardTitle);
@@ -219,8 +219,9 @@ function modalBuilder(pokemon) {
   const title = name.charAt(0).toUpperCase() + name.slice(1);
   modal.text(title);
 
-  //set the main pokemon image source
+  //set the main pokemon image source and alt value
   $("#pokemon-image").attr("src", pokemon.largeImage);
+  $("#pokemon-image").attr("alt", "A large image of a " + pokemon.name);
 
   //add stats
   stats.each(function (index, item) {
