@@ -175,7 +175,9 @@ function cardBuilder(pokemon) {
   let cardTitle = $('<h4 class="card-title h4">' + pokemon.name + "</h4>");
   let cardTitleContainer = $('<div class="container"></div>');
   let pokemonImageContainer = $('<div class="container-fluid"></div>');
-  let pokemonImage = $('<img class="img-thumbnail" alt="An image of a "' + pokemon.name + '></img>');
+  let pokemonImage = $(
+    '<img class="img-thumbnail" alt="An image of a "' + pokemon.name + "></img>"
+  );
 
   pokemonImageContainer.append(pokemonImage);
   cardTitleContainer.append(cardTitle);

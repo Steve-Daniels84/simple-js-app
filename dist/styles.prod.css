@@ -27,7 +27,7 @@ body {
 
 main {
     width: 100vw;
-    height: 100vh; /* Set main component height to 100% of viewport height */
+    height: 100vh; 
     background-image: url('../img/background.png');
     background-size: cover;
     background-repeat: no-repeat;
